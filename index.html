@@ -7,16 +7,41 @@
   <meta name="keywords" content="Anita Dangol, cybersecurity, CTF, ethical hacking, cryptography, Linux, SEO, Nepal, portfolio" />
   <meta name="author" content="Anita Dangol" />
   <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0d1117" />
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://anitadangol8.com.np/" />
+
+  <!-- Favicon (inline SVG) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230d1117'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='Space Grotesk%2C sans-serif' font-weight='700' font-size='26' fill='%2300d4aa'%3EAD%3C/text%3E%3C/svg%3E" />
 
   <!-- Open Graph -->
   <meta property="og:title" content="Anita Dangol | Cybersecurity Portfolio" />
-  <meta property="og:description" content="Exploring cybersecurity, creativity, and digital technology through continuous learning and curiosity." />
+  <meta property="og:description" content="Cybersecurity Student, CTF Learner, SEO Content Writer and Creative Digital Enthusiast from Nepal." />
   <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://anitadangol8.com.np/" />
+  <meta property="og:image" content="https://anitadangol8.com.np/og-image.png" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Anita Dangol | Cybersecurity Portfolio" />
   <meta name="twitter:description" content="Cybersecurity Student · CTF Learner · SEO Writer · Creative Enthusiast" />
+  <meta name="twitter:image" content="https://anitadangol8.com.np/og-image.png" />
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Anita Dangol",
+    "url": "https://anitadangol8.com.np/",
+    "jobTitle": "Cybersecurity Student & SEO Content Writer",
+    "email": "anikadangol@gmail.com",
+    "sameAs": [
+      "https://www.linkedin.com/in/anita-dangol-8084z/"
+    ]
+  }
+  </script>
 
   <title>Anita Dangol | Cybersecurity Portfolio</title>
 
@@ -49,17 +74,27 @@
   <!-- ===================== NAVBAR ===================== -->
   <nav id="navbar" class="navbar" role="navigation" aria-label="Main navigation">
     <div class="nav-container">
+
       <a href="#hero" class="nav-logo" aria-label="Anita Dangol home">
-        <span class="logo-bracket">[</span>
-        <span class="logo-name">AD</span>
-        <span class="logo-bracket">]</span>
+        <svg width="48" height="36" viewBox="0 0 48 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="dGradNav" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#00d4aa"/>
+              <stop offset="100%" stop-color="#7c3aed"/>
+            </linearGradient>
+          </defs>
+          <text x="0" y="27" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="26" fill="#4ade80">[</text>
+          <text x="11" y="27" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="20" fill="#ffffff">A</text>
+          <text x="25" y="27" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="20" fill="url(#dGradNav)">D</text>
+          <text x="38" y="27" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="26" fill="#4ade80">]</text>
+        </svg>
       </a>
 
       <ul class="nav-links" id="nav-links" role="list">
         <li><a href="#about"    class="nav-link">About</a></li>
         <li><a href="#skills"   class="nav-link">Skills</a></li>
         <li><a href="#projects" class="nav-link">Projects</a></li>
-        <li><a href="#blog"     class="nav-link">Blog</a></li>
+        <li><a href="/blog/"    class="nav-link">Blog</a></li>
         <li><a href="#contact"  class="nav-link">Contact</a></li>
       </ul>
 
@@ -72,6 +107,7 @@
           <span></span><span></span><span></span>
         </button>
       </div>
+
     </div>
   </nav>
 
@@ -81,7 +117,6 @@
 
     <div class="hero-container">
 
-      <!-- Hero copy -->
       <div class="hero-content">
         <div class="hero-label animate-fade-up" style="--delay:.2s">
           <span class="label-dot" aria-hidden="true"></span>
@@ -132,7 +167,6 @@
           </div>
         </div>
 
-        <!-- Floating badges -->
         <div class="stat-card glass-card float-card-1" aria-hidden="true">
           <span class="stat-icon">🔐</span>
           <span class="stat-label">CTF Learner</span>
@@ -145,7 +179,6 @@
 
     </div>
 
-    <!-- Scroll hint -->
     <div class="scroll-hint animate-fade-up" style="--delay:1.4s" aria-hidden="true">
       <span>Scroll to explore</span>
       <div class="scroll-arrow"></div>
@@ -164,7 +197,6 @@
 
       <div class="about-grid">
 
-        <!-- Profile card -->
         <div class="about-image-wrap" data-animate="fade-right">
           <div class="about-image-card glass-card">
             <div class="about-avatar">
@@ -182,7 +214,6 @@
           </div>
         </div>
 
-        <!-- About text -->
         <div class="about-text" data-animate="fade-left">
           <p class="about-paragraph">
             Hi! I'm <strong>Anita Dangol</strong>, a passionate beginner in
@@ -249,7 +280,6 @@
 
       <div class="skills-grid">
 
-        <!-- Cybersecurity -->
         <div class="skill-group glass-card" data-animate="fade-up" style="--stagger:0s">
           <div class="skill-group-header">
             <div class="skill-group-icon cybersec-icon" aria-hidden="true">🛡️</div>
@@ -269,7 +299,6 @@
           </div>
         </div>
 
-        <!-- Technical -->
         <div class="skill-group glass-card" data-animate="fade-up" style="--stagger:.15s">
           <div class="skill-group-header">
             <div class="skill-group-icon tech-icon" aria-hidden="true">⚙️</div>
@@ -289,7 +318,6 @@
           </div>
         </div>
 
-        <!-- Creative -->
         <div class="skill-group glass-card" data-animate="fade-up" style="--stagger:.3s">
           <div class="skill-group-header">
             <div class="skill-group-icon creative-icon" aria-hidden="true">🎨</div>
@@ -325,13 +353,12 @@
 
       <div class="projects-grid">
 
-        <!-- Project 1 -->
         <article class="project-card glass-card" data-animate="fade-up" style="--stagger:0s">
           <div class="project-card-top">
             <div class="project-icon" aria-hidden="true">🚩</div>
             <div class="project-links">
-              <a href="#" class="project-link" aria-label="View CTF Writeups on GitHub">⌥ GitHub</a>
-              <a href="#" class="project-link live" aria-label="View CTF Writeups live demo">↗ Demo</a>
+              <a href="https://github.com/anitaxcodes" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="View CTF Writeups on GitHub">⌥ GitHub</a>
+              <a href="#" class="project-link live" aria-label="CTF Writeups demo coming soon">↗ Demo</a>
             </div>
           </div>
           <h3 class="project-title">CTF Writeups</h3>
@@ -343,13 +370,12 @@
           </div>
         </article>
 
-        <!-- Project 2 -->
         <article class="project-card glass-card" data-animate="fade-up" style="--stagger:.1s">
           <div class="project-card-top">
             <div class="project-icon" aria-hidden="true">📔</div>
             <div class="project-links">
-              <a href="#" class="project-link" aria-label="View Cybersecurity Notes on GitHub">⌥ GitHub</a>
-              <a href="#" class="project-link live" aria-label="View Cybersecurity Notes">↗ View</a>
+              <a href="https://github.com/anitaxcodes" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="View Cybersecurity Notes on GitHub">⌥ GitHub</a>
+              <a href="#" class="project-link live" aria-label="Cybersecurity Notes coming soon">↗ View</a>
             </div>
           </div>
           <h3 class="project-title">Cybersecurity Notes</h3>
@@ -361,13 +387,12 @@
           </div>
         </article>
 
-        <!-- Project 3 -->
         <article class="project-card glass-card" data-animate="fade-up" style="--stagger:.2s">
           <div class="project-card-top">
             <div class="project-icon" aria-hidden="true">✍️</div>
             <div class="project-links">
-              <a href="#" class="project-link" aria-label="View SEO Content portfolio">⌥ Portfolio</a>
-              <a href="#" class="project-link live" aria-label="Read SEO Content articles">↗ Read</a>
+              <a href="https://github.com/anitaxcodes" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="View SEO Content portfolio">⌥ Portfolio</a>
+              <a href="#" class="project-link live" aria-label="SEO Content articles coming soon">↗ Read</a>
             </div>
           </div>
           <h3 class="project-title">SEO Content Projects</h3>
@@ -379,13 +404,12 @@
           </div>
         </article>
 
-        <!-- Project 4 -->
         <article class="project-card glass-card" data-animate="fade-up" style="--stagger:.3s">
           <div class="project-card-top">
             <div class="project-icon" aria-hidden="true">🎨</div>
             <div class="project-links">
-              <a href="#" class="project-link" aria-label="View Branding Concepts designs">⌥ Designs</a>
-              <a href="#" class="project-link live" aria-label="Preview Branding Concepts">↗ Preview</a>
+              <a href="https://github.com/anitaxcodes" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="View Branding Concepts designs">⌥ Designs</a>
+              <a href="#" class="project-link live" aria-label="Branding preview coming soon">↗ Preview</a>
             </div>
           </div>
           <h3 class="project-title">Branding Concepts</h3>
@@ -397,13 +421,12 @@
           </div>
         </article>
 
-        <!-- Project 5 -->
         <article class="project-card glass-card" data-animate="fade-up" style="--stagger:.4s">
           <div class="project-card-top">
             <div class="project-icon" aria-hidden="true">🌐</div>
             <div class="project-links">
-              <a href="#" class="project-link" aria-label="View Landing Page source code">⌥ Code</a>
-              <a href="#" class="project-link live" aria-label="View Landing Page live">↗ Live</a>
+              <a href="https://github.com/anitaxcodes" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="View Landing Page source code">⌥ Code</a>
+              <a href="#" class="project-link live" aria-label="Landing Page live coming soon">↗ Live</a>
             </div>
           </div>
           <h3 class="project-title">Landing Page Concepts</h3>
@@ -415,7 +438,6 @@
           </div>
         </article>
 
-        <!-- More CTA -->
         <div class="project-card project-more glass-card" data-animate="fade-up" style="--stagger:.5s" aria-label="More projects coming soon">
           <div class="more-content">
             <span class="more-icon" aria-hidden="true">+</span>
@@ -428,214 +450,156 @@
     </div>
   </section>
 
-  <!-- ===================== BLOG SECTION ===================== -->
-  <section id="blog" class="blog-section section" aria-label="Blog and notes">
-    <div class="section-container">
-
-      <div class="section-header" data-animate="fade-up">
-        <span class="section-tag">// 04</span>
-        <h2 class="section-title">Blog &amp; Notes</h2>
-        <p class="section-sub">Writing through the learning process</p>
-      </div>
-
-      <div class="blog-grid">
-
-        <!-- Featured -->
-        <article class="blog-card blog-featured glass-card" data-animate="fade-up">
-          <div class="blog-card-content">
-            <div class="blog-meta">
-              <span class="blog-category cybersec">Cybersecurity</span>
-              <span class="blog-date">Coming Soon</span>
-            </div>
-            <h3 class="blog-title">My Cybersecurity Learning Journey: Where It All Began</h3>
-            <p class="blog-excerpt">Starting from zero and building up — how I discovered cybersecurity, why it fascinated me, and the first steps I took into ethical hacking and CTF challenges.</p>
-            <a href="#" class="blog-read-more">Read Article →</a>
-          </div>
-          <div class="blog-badge" aria-label="Featured article">Featured</div>
-        </article>
-
-        <!-- Post 2 -->
-        <article class="blog-card glass-card" data-animate="fade-up" style="--stagger:.1s">
-          <div class="blog-meta">
-            <span class="blog-category ctf">CTF</span>
-            <span class="blog-date">Coming Soon</span>
-          </div>
-          <h3 class="blog-title">Solving My First CTF: A Beginner's Walkthrough</h3>
-          <p class="blog-excerpt">Step-by-step notes from my first Capture The Flag challenge — the tools I used and what I learned along the way.</p>
-          <a href="#" class="blog-read-more">Read More →</a>
-        </article>
-
-        <!-- Post 3 -->
-        <article class="blog-card glass-card" data-animate="fade-up" style="--stagger:.2s">
-          <div class="blog-meta">
-            <span class="blog-category linux">Linux</span>
-            <span class="blog-date">Coming Soon</span>
-          </div>
-          <h3 class="blog-title">Linux Commands Every Cybersecurity Beginner Should Know</h3>
-          <p class="blog-excerpt">A practical cheatsheet of essential Linux commands — from file navigation to permissions and networking basics.</p>
-          <a href="#" class="blog-read-more">Read More →</a>
-        </article>
-
-        <!-- Post 4 -->
-        <article class="blog-card glass-card" data-animate="fade-up" style="--stagger:.3s">
-          <div class="blog-meta">
-            <span class="blog-category seo">SEO</span>
-            <span class="blog-date">Coming Soon</span>
-          </div>
-          <h3 class="blog-title">From Writing to Digital Security: How SEO and Cybersecurity Connect</h3>
-          <p class="blog-excerpt">Exploring the surprising overlap between SEO content writing and cybersecurity — digital trust, authenticity, and smart research.</p>
-          <a href="#" class="blog-read-more">Read More →</a>
-        </article>
-
-        <!-- Post 5 -->
-        <article class="blog-card glass-card" data-animate="fade-up" style="--stagger:.4s">
-          <div class="blog-meta">
-            <span class="blog-category personal">Personal</span>
-            <span class="blog-date">Coming Soon</span>
-          </div>
-          <h3 class="blog-title">Building Consistency: How I Stay Motivated Learning Tech</h3>
-          <p class="blog-excerpt">The systems and habits that help me show up, learn every day, and stay committed to my growth in cybersecurity and beyond.</p>
-          <a href="#" class="blog-read-more">Read More →</a>
-        </article>
-
-      </div>
-
-      <div class="blog-cta" data-animate="fade-up">
-        <a href="#" class="btn btn-outline">View All Articles →</a>
-      </div>
-
-    </div>
-  </section>
-
   <!-- ===================== CONTACT SECTION ===================== -->
   <section id="contact" class="contact-section section" aria-label="Contact Anita">
     <div class="section-container">
 
       <div class="section-header" data-animate="fade-up">
-        <span class="section-tag">// 05</span>
+        <span class="section-tag">// 04</span>
         <h2 class="section-title">Get In Touch</h2>
         <p class="section-sub">Always open to learning, collaborating, and connecting</p>
       </div>
 
-      <div class="contact-grid">
+      <!-- 3 contact cards -->
+      <div class="contact-cards-row" data-animate="fade-up">
 
-        <!-- Contact info -->
-        <div class="contact-info" data-animate="fade-right">
-          <p class="contact-intro">
-            Whether you want to collaborate, share resources, or just say hello —
-            I'd love to connect. I'm always excited to meet fellow learners and creatives.
-          </p>
-
-          <div class="contact-links">
-            <a href="mailto:your@email.com" class="contact-link glass-card">
-              <div class="contact-link-icon" aria-hidden="true">✉</div>
-              <div>
-                <span class="contact-link-label">Email</span>
-                <span class="contact-link-value">your@email.com</span>
-              </div>
-            </a>
-            <a href="https://github.com/anitaxcodes" target="_blank" rel="noopener noreferrer" class="contact-link glass-card">
-              <div class="contact-link-icon" aria-hidden="true">⌥</div>
-              <div>
-                <span class="contact-link-label">GitHub</span>
-                <span class="contact-link-value">github.com/anitaxcodes</span>
-              </div>
-            </a>
-            <a href="https://www.linkedin.com/in/anita-dangol-8084z/" target="_blank" rel="noopener noreferrer" class="contact-link glass-card">
-              <div class="contact-link-icon" aria-hidden="true">in</div>
-              <div>
-                <span class="contact-link-label">LinkedIn</span>
-                <span class="contact-link-value">linkedin.com/in/anita-dangol-8084z</span>
-              </div>
-            </a>
-            <a href="https://www.instagram.com/anita_dangol_?igsh=c2FobzlqaHFweTlv" target="_blank" rel="noopener noreferrer" class="contact-link glass-card">
-              <div class="contact-link-icon" aria-hidden="true">◎</div>
-              <div>
-                <span class="contact-link-label">Instagram</span>
-                <span class="contact-link-value">@anita_dangol_</span>
-              </div>
-            </a>
-            <a href="https://wa.me/qr/FC6MQRCBZZ6AB1" target="_blank" rel="noopener noreferrer" class="contact-link glass-card">
-              <div class="contact-link-icon" aria-hidden="true">✆</div>
-              <div>
-                <span class="contact-link-label">WhatsApp</span>
-                <span class="contact-link-value">Message on WhatsApp</span>
-              </div>
-            </a>
+        <!-- Email -->
+        <div class="contact-card glass-card">
+          <div class="contact-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="4" width="20" height="16" rx="2"/>
+              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+            </svg>
           </div>
-
-          <div class="availability-badge glass-card">
-            <span class="avail-dot" aria-hidden="true"></span>
-            <span>Open to collaborations &amp; opportunities</span>
-          </div>
+          <h3 class="contact-card-title">Email</h3>
+          <p class="contact-card-value">anikadangol@gmail.com</p>
+          <a href="mailto:anikadangol@gmail.com" class="contact-card-cta">SEND EMAIL →</a>
         </div>
 
-        <!-- Contact form -->
-        <div class="contact-form-wrap" data-animate="fade-left">
-          <form id="contact-form" class="contact-form glass-card" novalidate>
-            <h3 class="form-title">Send a Message</h3>
+        <!-- LinkedIn -->
+        <div class="contact-card glass-card">
+          <div class="contact-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+              <rect x="2" y="9" width="4" height="12"/>
+              <circle cx="4" cy="4" r="2"/>
+            </svg>
+          </div>
+          <h3 class="contact-card-title">LinkedIn</h3>
+          <p class="contact-card-value">anita-dangol-8084z</p>
+          <a href="https://www.linkedin.com/in/anita-dangol-8084z/" target="_blank" rel="noopener noreferrer" class="contact-card-cta">CONNECT →</a>
+        </div>
 
-            <div class="form-row">
-              <div class="form-group">
-                <label for="name" class="form-label">Name</label>
-                <input type="text" id="name" name="name" class="form-input" placeholder="Your name" required autocomplete="name" />
-              </div>
-              <div class="form-group">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" id="email" name="email" class="form-input" placeholder="your@email.com" required autocomplete="email" />
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="subject" class="form-label">Subject</label>
-              <input type="text" id="subject" name="subject" class="form-input" placeholder="What's this about?" />
-            </div>
-
-            <div class="form-group">
-              <label for="message" class="form-label">Message</label>
-              <textarea id="message" name="message" class="form-input form-textarea" placeholder="Your message…" rows="5" required></textarea>
-            </div>
-
-            <button type="submit" class="btn btn-primary btn-full">
-              <span class="btn-text">Send Message</span>
-              <span class="btn-sending hidden">Sending…</span>
-            </button>
-
-            <div id="form-success" class="form-success hidden" role="alert">
-              ✓ Message sent! I'll get back to you soon.
-            </div>
-          </form>
+        <!-- WhatsApp -->
+        <div class="contact-card glass-card">
+          <div class="contact-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+              <path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.554 4.121 1.526 5.855L.057 23.882a.5.5 0 0 0 .614.608l6.163-1.453A11.942 11.942 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.893 0-3.67-.516-5.192-1.416l-.372-.217-3.853.909.956-3.747-.234-.381A9.965 9.965 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+            </svg>
+          </div>
+          <h3 class="contact-card-title">WhatsApp</h3>
+          <p class="contact-card-value">Message me directly</p>
+          <a href="https://wa.me/qr/FC6MQRCBZZ6AB1" target="_blank" rel="noopener noreferrer" class="contact-card-cta">MESSAGE ME →</a>
         </div>
 
       </div>
+
+      <!-- Availability -->
+      <div class="contact-avail-center" data-animate="fade-up">
+        <div class="availability-badge glass-card">
+          <span class="avail-dot" aria-hidden="true"></span>
+          <span>Open to collaborations &amp; opportunities</span>
+        </div>
+      </div>
+
+      <!-- Contact form -->
+      <div class="contact-form-wrap contact-form-center" data-animate="fade-up">
+        <form id="contact-form" class="contact-form glass-card"
+              action="https://formspree.io/f/mwvyreqw"
+              method="POST" novalidate>
+          <h3 class="form-title">Send a Message</h3>
+          <input type="hidden" name="_replyto" value="anikadangol@gmail.com" />
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name" class="form-label">Name</label>
+              <input type="text" id="name" name="name" class="form-input" placeholder="Your name" required autocomplete="name" />
+            </div>
+            <div class="form-group">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" id="email" name="email" class="form-input" placeholder="your@email.com" required autocomplete="email" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="subject" class="form-label">Subject</label>
+            <input type="text" id="subject" name="subject" class="form-input" placeholder="What's this about?" />
+          </div>
+
+          <div class="form-group">
+            <label for="message" class="form-label">Message</label>
+            <textarea id="message" name="message" class="form-input form-textarea" placeholder="Your message…" rows="5" required></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-full">
+            <span class="btn-text">Send Message</span>
+            <span class="btn-sending hidden">Sending…</span>
+          </button>
+
+          <div id="form-success" class="form-success hidden" role="alert">
+            ✓ Message sent! I'll get back to you soon.
+          </div>
+        </form>
+      </div>
+
     </div>
   </section>
 
   <!-- ===================== FOOTER ===================== -->
   <footer class="footer" role="contentinfo">
     <div class="footer-container">
+
       <div class="footer-top">
+
         <div class="footer-logo">
-          <span class="logo-bracket">[</span>
-          <span class="logo-name">AD</span>
-          <span class="logo-bracket">]</span>
+          <svg width="48" height="36" viewBox="0 0 48 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="dGradFooter" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#00d4aa"/>
+                <stop offset="100%" stop-color="#7c3aed"/>
+              </linearGradient>
+            </defs>
+            <text x="0" y="27" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="26" fill="#4ade80">[</text>
+            <text x="11" y="27" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="20" fill="#ffffff">A</text>
+            <text x="25" y="27" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="20" fill="url(#dGradFooter)">D</text>
+            <text x="38" y="27" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="26" fill="#4ade80">]</text>
+          </svg>
           <span class="footer-tagline">Anita Dangol</span>
         </div>
+
         <nav class="footer-nav" aria-label="Footer navigation">
           <a href="#about">About</a>
           <a href="#skills">Skills</a>
           <a href="#projects">Projects</a>
-          <a href="#blog">Blog</a>
+          <a href="/blog/">Blog</a>
           <a href="#contact">Contact</a>
         </nav>
-      </div>
-      <div class="footer-bottom">
-        <p class="footer-copy">© 2025 Anita Dangol. Built with curiosity and code.</p>
-        <p class="footer-made">Designed &amp; developed by Anita Dangol</p>
-      </div>
-    </div>
-  </footer>
 
-  <script src="script.js"></script>
-</body>
-</html>
+        <div class="footer-social">
+          <a href="mailto:anikadangol@gmail.com" class="footer-social-link" aria-label="Email Anita">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="4" width="20" height="16" rx="2"/>
+              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+            </svg>
+          </a>
+          <a href="https://www.linkedin.com/in/anita-dangol-8084z/" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="LinkedIn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+              <rect x="2" y="9" width="4" height="12"/>
+              <circle cx="4" cy="4" r="2"/>
+            </svg>
+          </a>
+          <a href="https://wa.me/qr/FC6MQRCBZZ6AB1" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="WhatsApp">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463
