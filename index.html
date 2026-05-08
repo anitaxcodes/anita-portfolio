@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Anita Dangol — Cybersecurity Student, CTF Learner, SEO Content Writer, and Creative Digital Enthusiast from Nepal." />
+  <meta name="keywords" content="Anita Dangol, cybersecurity, CTF, ethical hacking, cryptography, Linux, SEO, Nepal, portfolio" />
+  <meta name="author" content="Anita Dangol" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Anita Dangol | Cybersecurity Portfolio" />
+  <meta property="og:description" content="Exploring cybersecurity, creativity, and digital technology through continuous learning and curiosity." />
+  <meta property="og:type" content="website" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Anita Dangol | Cybersecurity Portfolio" />
+  <meta name="twitter:description" content="Cybersecurity Student · CTF Learner · SEO Writer · Creative Enthusiast" />
+
+  <title>Anita Dangol | Cybersecurity Portfolio</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===================== PAGE LOADER ===================== -->
+  <div id="loader" class="loader" role="status" aria-label="Loading">
+    <div class="loader-content">
+      <div class="loader-terminal">
+        <span class="loader-prompt">anita@cyber:~$</span>
+        <span class="loader-cmd"> initializing portfolio</span>
+        <span class="loader-cursor">▋</span>
+      </div>
+      <div class="loader-bar">
+        <div class="loader-progress"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== SCROLL PROGRESS ===================== -->
+  <div id="scroll-progress" class="scroll-progress" role="progressbar" aria-hidden="true"></div>
+
+  <!-- ===================== NAVBAR ===================== -->
+  <nav id="navbar" class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-container">
+      <a href="#hero" class="nav-logo" aria-label="Anita Dangol home">
+        <span class="logo-bracket">[</span>
+        <span class="logo-name">AD</span>
+        <span class="logo-bracket">]</span>
+      </a>
+
+      <ul class="nav-links" id="nav-links" role="list">
+        <li><a href="#about"    class="nav-link">About</a></li>
+        <li><a href="#skills"   class="nav-link">Skills</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#blog"     class="nav-link">Blog</a></li>
+        <li><a href="#contact"  class="nav-link">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button id="theme-toggle" class="theme-btn" aria-label="Toggle dark/light mode">
+          <span class="theme-icon sun" aria-hidden="true">☀</span>
+          <span class="theme-icon moon" aria-hidden="true">◑</span>
+        </button>
+        <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===================== HERO SECTION ===================== -->
+  <section id="hero" class="hero-section" aria-label="Introduction">
+    <canvas id="particles-canvas" aria-hidden="true"></canvas>
+
+    <div class="hero-container">
+
+      <!-- Hero copy -->
+      <div class="hero-content">
+        <div class="hero-label animate-fade-up" style="--delay:.2s">
+          <span class="label-dot" aria-hidden="true"></span>
+          <span>Hello, I'm</span>
+        </div>
+
+        <h1 class="hero-name animate-fade-up" style="--delay:.4s">
+          Anita<br />
+          <span class="gradient-text">Dangol</span>
+        </h1>
+
+        <div class="hero-typing animate-fade-up" style="--delay:.65s" aria-live="polite">
+          <span class="typing-prefix" aria-hidden="true">→ </span>
+          <span id="typed-text" class="typed-text"></span>
+          <span class="typing-cursor" aria-hidden="true">|</span>
+        </div>
+
+        <p class="hero-intro animate-fade-up" style="--delay:.85s">
+          Exploring cybersecurity, creativity, and digital technology through
+          continuous learning and curiosity.
+        </p>
+
+        <div class="hero-cta animate-fade-up" style="--delay:1.05s">
+          <a href="#" class="btn btn-primary">
+            <span class="btn-icon" aria-hidden="true">↓</span>
+            Download Resume
+          </a>
+          <a href="#" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
+            <span class="btn-icon" aria-hidden="true">⌥</span>
+            View GitHub
+          </a>
+        </div>
+      </div>
+
+      <!-- Terminal widget -->
+      <div class="hero-terminal animate-fade-left" style="--delay:.65s" aria-label="Terminal preview">
+        <div class="terminal-card glass-card">
+          <div class="terminal-header" aria-hidden="true">
+            <div class="terminal-dots">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
+            <span class="terminal-title">anita@cyber — bash</span>
+          </div>
+          <div class="terminal-body">
+            <div id="terminal-lines" class="terminal-lines" aria-label="Terminal output"></div>
+          </div>
+        </div>
+
+        <!-- Floating badges -->
+        <div class="stat-card glass-card float-card-1" aria-hidden="true">
+          <span class="stat-icon">🔐</span>
+          <span class="stat-label">CTF Learner</span>
+        </div>
+        <div class="stat-card glass-card float-card-2" aria-hidden="true">
+          <span class="stat-icon">🌿</span>
+          <span class="stat-label">Growing Daily</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Scroll hint -->
+    <div class="scroll-hint animate-fade-up" style="--delay:1.4s" aria-hidden="true">
+      <span>Scroll to explore</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- ===================== ABOUT SECTION ===================== -->
+  <section id="about" class="about-section section" aria-label="About Anita">
+    <div class="section-container">
+
+      <div class="section-header" data-animate="fade-up">
+        <span class="section-tag">// 01</span>
+        <h2 class="section-title">About Me</h2>
+        <p class="section-sub">Curious learner, creative thinker</p>
+      </div>
+
+      <div class="about-grid">
+
+        <!-- Profile card -->
+        <div class="about-image-wrap" data-animate="fade-right">
+          <div class="about-image-card glass-card">
+            <div class="about-avatar">
+              <div class="avatar-placeholder" aria-label="Profile illustration">
+                <span class="avatar-initials">AD</span>
+                <div class="avatar-ring" aria-hidden="true"></div>
+                <div class="avatar-ring ring-2" aria-hidden="true"></div>
+              </div>
+            </div>
+            <div class="about-image-tags">
+              <span class="img-tag">📍 Nepal</span>
+              <span class="img-tag">🎓 Student</span>
+              <span class="img-tag">🔒 Cybersecurity</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- About text -->
+        <div class="about-text" data-animate="fade-left">
+          <p class="about-paragraph">
+            Hi! I'm <strong>Anita Dangol</strong>, a passionate beginner in
+            cybersecurity from Nepal. I'm currently diving deep into ethical
+            hacking, cryptography, and Linux fundamentals — building my skills
+            one challenge at a time.
+          </p>
+          <p class="about-paragraph">
+            I'm particularly drawn to <span class="highlight-text">CTF challenges</span>,
+            where cryptography, web security, and logical thinking come together
+            in creative ways. Every solved challenge feels like a small victory
+            in my learning journey.
+          </p>
+          <p class="about-paragraph">
+            Alongside my cybersecurity studies, I work as an
+            <span class="highlight-text">SEO content writer</span> and digital
+            branding specialist — blending technical precision with creative
+            storytelling. I believe the best digital experiences live at the
+            intersection of security, creativity, and clarity.
+          </p>
+          <p class="about-paragraph">
+            I'm focused on consistency, growth, and building a strong technical
+            foundation while staying curious and creative throughout the process.
+          </p>
+
+          <div class="about-interests" role="list" aria-label="Areas of interest">
+            <span class="interest-tag" role="listitem">🔐 Ethical Hacking</span>
+            <span class="interest-tag" role="listitem">🔑 Cryptography</span>
+            <span class="interest-tag" role="listitem">🐧 Linux</span>
+            <span class="interest-tag" role="listitem">🌐 Web Security</span>
+            <span class="interest-tag" role="listitem">✍️ SEO Writing</span>
+            <span class="interest-tag" role="listitem">🎨 Creative Branding</span>
+          </div>
+
+          <div class="about-stats" aria-label="Key statistics">
+            <div class="stat-item">
+              <span class="stat-number" data-target="5">0</span>
+              <span class="stat-desc">Skill Areas</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number" data-target="10">0</span>
+              <span class="stat-desc">Projects Started</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number" data-target="365">0</span>
+              <span class="stat-desc">Days Learning</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SKILLS SECTION ===================== -->
+  <section id="skills" class="skills-section section" aria-label="Skills and learning areas">
+    <div class="section-container">
+
+      <div class="section-header" data-animate="fade-up">
+        <span class="section-tag">// 02</span>
+        <h2 class="section-title">Skills &amp; Learning</h2>
+        <p class="section-sub">Growing my toolkit every day</p>
+      </div>
+
+      <div class="skills-grid">
+
+        <!-- Cybersecurity -->
+        <div class="skill-group glass-card" data-animate="fade-up" style="--stagger:0s">
+          <div class="skill-group-header">
+            <div class="skill-group-icon cybersec-icon" aria-hidden="true">🛡️</div>
+            <h3 class="skill-group-title">Cybersecurity</h3>
+          </div>
+          <ul class="skill-list">
+            <li class="skill-item"><span class="skill-dot" aria-hidden="true"></span>CTF Challenges</li>
+            <li class="skill-item"><span class="skill-dot" aria-hidden="true"></span>Cryptography Basics</li>
+            <li class="skill-item"><span class="skill-dot" aria-hidden="true"></span>Linux Fundamentals</li>
+            <li class="skill-item"><span class="skill-dot" aria-hidden="true"></span>Ethical Hacking Basics</li>
+            <li class="skill-item"><span class="skill-dot" aria-hidden="true"></span>Cybersecurity Concepts</li>
+          </ul>
+          <div class="skill-level" aria-label="Beginner level, 35%">
+            <span class="level-label">Level</span>
+            <div class="level-bar"><div class="level-fill" data-width="35%"></div></div>
+            <span class="level-tag">Beginner</span>
+          </div>
+        </div>
+
+        <!-- Technical -->
+        <div class="skill-group glass-card" data-animate="fade-up" style="--stagger:.15s">
+          <div class="skill-group-header">
+            <div class="skill-group-icon tech-icon" aria-hidden="true">⚙️</div>
+            <h3 class="skill-group-title">Technical</h3>
+          </div>
+          <ul class="skill-list">
+            <li class="skill-item"><span class="skill-dot" aria-hidden="true"></span>Git / GitHub Basics</li>
+            <li class="skill-item"><span class="skill-dot" aria-hidden="true"></span>SEO Content Writing</li>
+            <li class="skill-item"><span class="skill-dot" aria-hidden="true"></span>Digital Research</li>
+            <li class="skill-item"><span class="skill-dot" aria-hidden="true"></span>Technical Documentation</li>
+            <li class="skill-item"><span class="skill-dot" aria-hidden="true"></span>Keyword Analysis</li>
+          </ul>
+          <div class="skill-level" aria-label="Intermediate level, 60%">
+            <span class="level-label">Level</span>
+            <div class="level-bar"><div class="level-fill" data-width="60%"></div></div>
+            <span class="level-tag">Intermediate</span>
+          </div>
+        </div>
+
+        <!-- Creative -->
+        <div class="skill-group glass-card" data-animate="fade-up" style="--stagger:.3s">
+          <div class="skill-group-header">
+            <div class="skill-group-icon creative-icon" aria-hidden="true">🎨</div>
+            <h3 class="skill-group-title">Creative</h3>
+          </div>
+          <ul class="skill-list">
+            <li class="skill-item"><span class="skill-dot" aria-hidden="true"></span>Canva Design</li>
+            <li class="skill-item"><span class="skill-dot" aria-hidden="true"></span>Branding Concepts</li>
+            <li class="skill-item"><span class="skill-dot" aria-hidden="true"></span>Creative Writing</li>
+            <li class="skill-item"><span class="skill-dot" aria-hidden="true"></span>Social Media Content</li>
+            <li class="skill-item"><span class="skill-dot" aria-hidden="true"></span>Digital Marketing</li>
+          </ul>
+          <div class="skill-level" aria-label="Proficient level, 70%">
+            <span class="level-label">Level</span>
+            <div class="level-bar"><div class="level-fill" data-width="70%"></div></div>
+            <span class="level-tag">Proficient</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PROJECTS SECTION ===================== -->
+  <section id="projects" class="projects-section section" aria-label="Projects and work">
+    <div class="section-container">
+
+      <div class="section-header" data-animate="fade-up">
+        <span class="section-tag">// 03</span>
+        <h2 class="section-title">Projects &amp; Work</h2>
+        <p class="section-sub">Building, learning, documenting</p>
+      </div>
+
+      <div class="projects-grid">
+
+        <!-- Project 1 -->
+        <article class="project-card glass-card" data-animate="fade-up" style="--stagger:0s">
+          <div class="project-card-top">
+            <div class="project-icon" aria-hidden="true">🚩</div>
+            <div class="project-links">
+              <a href="#" class="project-link" aria-label="View CTF Writeups on GitHub">⌥ GitHub</a>
+              <a href="#" class="project-link live" aria-label="View CTF Writeups live demo">↗ Demo</a>
+            </div>
+          </div>
+          <h3 class="project-title">CTF Writeups</h3>
+          <p class="project-desc">Documenting my journey through beginner Capture The Flag challenges — notes on cryptography puzzles, steganography, and web security problems.</p>
+          <div class="project-tags">
+            <span class="tag">CTF</span>
+            <span class="tag">Cryptography</span>
+            <span class="tag">Learning</span>
+          </div>
+        </article>
+
+        <!-- Project 2 -->
+        <article class="project-card glass-card" data-animate="fade-up" style="--stagger:.1s">
+          <div class="project-card-top">
+            <div class="project-icon" aria-hidden="true">📔</div>
+            <div class="project-links">
+              <a href="#" class="project-link" aria-label="View Cybersecurity Notes on GitHub">⌥ GitHub</a>
+              <a href="#" class="project-link live" aria-label="View Cybersecurity Notes">↗ View</a>
+            </div>
+          </div>
+          <h3 class="project-title">Cybersecurity Notes</h3>
+          <p class="project-desc">Structured notes covering Linux commands, ethical hacking concepts, network basics, and cybersecurity fundamentals for beginners.</p>
+          <div class="project-tags">
+            <span class="tag">Linux</span>
+            <span class="tag">Notes</span>
+            <span class="tag">Security</span>
+          </div>
+        </article>
+
+        <!-- Project 3 -->
+        <article class="project-card glass-card" data-animate="fade-up" style="--stagger:.2s">
+          <div class="project-card-top">
+            <div class="project-icon" aria-hidden="true">✍️</div>
+            <div class="project-links">
+              <a href="#" class="project-link" aria-label="View SEO Content portfolio">⌥ Portfolio</a>
+              <a href="#" class="project-link live" aria-label="Read SEO Content articles">↗ Read</a>
+            </div>
+          </div>
+          <h3 class="project-title">SEO Content Projects</h3>
+          <p class="project-desc">SEO-optimized articles, blog content, and digital writing projects focused on technology, cybersecurity awareness, and creative topics.</p>
+          <div class="project-tags">
+            <span class="tag">SEO</span>
+            <span class="tag">Writing</span>
+            <span class="tag">Content</span>
+          </div>
+        </article>
+
+        <!-- Project 4 -->
+        <article class="project-card glass-card" data-animate="fade-up" style="--stagger:.3s">
+          <div class="project-card-top">
+            <div class="project-icon" aria-hidden="true">🎨</div>
+            <div class="project-links">
+              <a href="#" class="project-link" aria-label="View Branding Concepts designs">⌥ Designs</a>
+              <a href="#" class="project-link live" aria-label="Preview Branding Concepts">↗ Preview</a>
+            </div>
+          </div>
+          <h3 class="project-title">Branding Concepts</h3>
+          <p class="project-desc">Creative branding and visual identity experiments exploring colour psychology, typography, and digital aesthetics for modern personal brands.</p>
+          <div class="project-tags">
+            <span class="tag">Branding</span>
+            <span class="tag">Design</span>
+            <span class="tag">Canva</span>
+          </div>
+        </article>
+
+        <!-- Project 5 -->
+        <article class="project-card glass-card" data-animate="fade-up" style="--stagger:.4s">
+          <div class="project-card-top">
+            <div class="project-icon" aria-hidden="true">🌐</div>
+            <div class="project-links">
+              <a href="#" class="project-link" aria-label="View Landing Page source code">⌥ Code</a>
+              <a href="#" class="project-link live" aria-label="View Landing Page live">↗ Live</a>
+            </div>
+          </div>
+          <h3 class="project-title">Landing Page Concepts</h3>
+          <p class="project-desc">Responsive HTML/CSS landing page experiments practising clean layout, typography, and visual hierarchy in modern web design.</p>
+          <div class="project-tags">
+            <span class="tag">HTML</span>
+            <span class="tag">CSS</span>
+            <span class="tag">Design</span>
+          </div>
+        </article>
+
+        <!-- More CTA -->
+        <div class="project-card project-more glass-card" data-animate="fade-up" style="--stagger:.5s" aria-label="More projects coming soon">
+          <div class="more-content">
+            <span class="more-icon" aria-hidden="true">+</span>
+            <p>More projects in progress…</p>
+            <a href="#" class="btn btn-ghost btn-sm">View All on GitHub</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== BLOG SECTION ===================== -->
+  <section id="blog" class="blog-section section" aria-label="Blog and notes">
+    <div class="section-container">
+
+      <div class="section-header" data-animate="fade-up">
+        <span class="section-tag">// 04</span>
+        <h2 class="section-title">Blog &amp; Notes</h2>
+        <p class="section-sub">Writing through the learning process</p>
+      </div>
+
+      <div class="blog-grid">
+
+        <!-- Featured -->
+        <article class="blog-card blog-featured glass-card" data-animate="fade-up">
+          <div class="blog-card-content">
+            <div class="blog-meta">
+              <span class="blog-category cybersec">Cybersecurity</span>
+              <span class="blog-date">Coming Soon</span>
+            </div>
+            <h3 class="blog-title">My Cybersecurity Learning Journey: Where It All Began</h3>
+            <p class="blog-excerpt">Starting from zero and building up — how I discovered cybersecurity, why it fascinated me, and the first steps I took into ethical hacking and CTF challenges.</p>
+            <a href="#" class="blog-read-more">Read Article →</a>
+          </div>
+          <div class="blog-badge" aria-label="Featured article">Featured</div>
+        </article>
+
+        <!-- Post 2 -->
+        <article class="blog-card glass-card" data-animate="fade-up" style="--stagger:.1s">
+          <div class="blog-meta">
+            <span class="blog-category ctf">CTF</span>
+            <span class="blog-date">Coming Soon</span>
+          </div>
+          <h3 class="blog-title">Solving My First CTF: A Beginner's Walkthrough</h3>
+          <p class="blog-excerpt">Step-by-step notes from my first Capture The Flag challenge — the tools I used and what I learned along the way.</p>
+          <a href="#" class="blog-read-more">Read More →</a>
+        </article>
+
+        <!-- Post 3 -->
+        <article class="blog-card glass-card" data-animate="fade-up" style="--stagger:.2s">
+          <div class="blog-meta">
+            <span class="blog-category linux">Linux</span>
+            <span class="blog-date">Coming Soon</span>
+          </div>
+          <h3 class="blog-title">Linux Commands Every Cybersecurity Beginner Should Know</h3>
+          <p class="blog-excerpt">A practical cheatsheet of essential Linux commands — from file navigation to permissions and networking basics.</p>
+          <a href="#" class="blog-read-more">Read More →</a>
+        </article>
+
+        <!-- Post 4 -->
+        <article class="blog-card glass-card" data-animate="fade-up" style="--stagger:.3s">
+          <div class="blog-meta">
+            <span class="blog-category seo">SEO</span>
+            <span class="blog-date">Coming Soon</span>
+          </div>
+          <h3 class="blog-title">From Writing to Digital Security: How SEO and Cybersecurity Connect</h3>
+          <p class="blog-excerpt">Exploring the surprising overlap between SEO content writing and cybersecurity — digital trust, authenticity, and smart research.</p>
+          <a href="#" class="blog-read-more">Read More →</a>
+        </article>
+
+        <!-- Post 5 -->
+        <article class="blog-card glass-card" data-animate="fade-up" style="--stagger:.4s">
+          <div class="blog-meta">
+            <span class="blog-category personal">Personal</span>
+            <span class="blog-date">Coming Soon</span>
+          </div>
+          <h3 class="blog-title">Building Consistency: How I Stay Motivated Learning Tech</h3>
+          <p class="blog-excerpt">The systems and habits that help me show up, learn every day, and stay committed to my growth in cybersecurity and beyond.</p>
+          <a href="#" class="blog-read-more">Read More →</a>
+        </article>
+
+      </div>
+
+      <div class="blog-cta" data-animate="fade-up">
+        <a href="#" class="btn btn-outline">View All Articles →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== CONTACT SECTION ===================== -->
+  <section id="contact" class="contact-section section" aria-label="Contact Anita">
+    <div class="section-container">
+
+      <div class="section-header" data-animate="fade-up">
+        <span class="section-tag">// 05</span>
+        <h2 class="section-title">Get In Touch</h2>
+        <p class="section-sub">Always open to learning, collaborating, and connecting</p>
+      </div>
+
+      <div class="contact-grid">
+
+        <!-- Contact info -->
+        <div class="contact-info" data-animate="fade-right">
+          <p class="contact-intro">
+            Whether you want to collaborate, share resources, or just say hello —
+            I'd love to connect. I'm always excited to meet fellow learners and creatives.
+          </p>
+
+          <div class="contact-links">
+            <a href="mailto:your@email.com" class="contact-link glass-card">
+              <div class="contact-link-icon" aria-hidden="true">✉</div>
+              <div>
+                <span class="contact-link-label">Email</span>
+                <span class="contact-link-value">your@email.com</span>
+              </div>
+            </a>
+            <a href="#" target="_blank" rel="noopener noreferrer" class="contact-link glass-card">
+              <div class="contact-link-icon" aria-hidden="true">⌥</div>
+              <div>
+                <span class="contact-link-label">GitHub</span>
+                <span class="contact-link-value">github.com/anitadangol</span>
+              </div>
+            </a>
+            <a href="#" target="_blank" rel="noopener noreferrer" class="contact-link glass-card">
+              <div class="contact-link-icon" aria-hidden="true">in</div>
+              <div>
+                <span class="contact-link-label">LinkedIn</span>
+                <span class="contact-link-value">linkedin.com/in/anitadangol</span>
+              </div>
+            </a>
+          </div>
+
+          <div class="availability-badge glass-card">
+            <span class="avail-dot" aria-hidden="true"></span>
+            <span>Open to collaborations &amp; opportunities</span>
+          </div>
+        </div>
+
+        <!-- Contact form -->
+        <div class="contact-form-wrap" data-animate="fade-left">
+          <form id="contact-form" class="contact-form glass-card" novalidate>
+            <h3 class="form-title">Send a Message</h3>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" id="name" name="name" class="form-input" placeholder="Your name" required autocomplete="name" />
+              </div>
+              <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" name="email" class="form-input" placeholder="your@email.com" required autocomplete="email" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="subject" class="form-label">Subject</label>
+              <input type="text" id="subject" name="subject" class="form-input" placeholder="What's this about?" />
+            </div>
+
+            <div class="form-group">
+              <label for="message" class="form-label">Message</label>
+              <textarea id="message" name="message" class="form-input form-textarea" placeholder="Your message…" rows="5" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full">
+              <span class="btn-text">Send Message</span>
+              <span class="btn-sending hidden">Sending…</span>
+            </button>
+
+            <div id="form-success" class="form-success hidden" role="alert">
+              ✓ Message sent! I'll get back to you soon.
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-container">
+      <div class="footer-top">
+        <div class="footer-logo">
+          <span class="logo-bracket">[</span>
+          <span class="logo-name">AD</span>
+          <span class="logo-bracket">]</span>
+          <span class="footer-tagline">Anita Dangol</span>
+        </div>
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="#about">About</a>
+          <a href="#skills">Skills</a>
+          <a href="#projects">Projects</a>
+          <a href="#blog">Blog</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2025 Anita Dangol. Built with curiosity and code.</p>
+        <p class="footer-made">Designed &amp; developed by Anita Dangol</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
