@@ -476,6 +476,13 @@ nav { display: flex; align-items: center; }
 }
 
 .about-connect { color: var(--cyan) !important; font-weight: 500; }
+.about-connect-link {
+  color:           var(--cyan);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition:      opacity 0.2s ease;
+}
+.about-connect-link:hover { opacity: 0.75; }
 
 .about-stats { display: flex; flex-direction: column; gap: 18px; }
 

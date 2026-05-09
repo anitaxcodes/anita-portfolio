@@ -46,8 +46,8 @@ window.addEventListener('load', () => {
       r:       Math.random() * 1.4 + 0.3,
       color:   STAR_COLORS[Math.floor(Math.random() * STAR_COLORS.length)],
       alpha:   Math.random() * 0.7 + 0.2,
-      // twinkle: slowly oscillate alpha
-      speed:   Math.random() * 0.008 + 0.002,
+      // twinkle: gently oscillate alpha (~5–16s per cycle)
+      speed:   Math.random() * 0.0008 + 0.0004,
       phase:   Math.random() * Math.PI * 2,
     }));
   }
