@@ -42,21 +42,19 @@
   <!-- ==================== MAIN CONTENT ==================== -->
   <div id="main-content">
 
-    <!-- Background orbs + grid -->
-    <div class="bg-animation" aria-hidden="true">
-      <div class="orb orb-1"></div>
-      <div class="orb orb-2"></div>
-      <div class="grid-overlay"></div>
-    </div>
+    <!-- Starfield background -->
+    <canvas id="starfield" aria-hidden="true"></canvas>
 
     <!-- Custom cursor -->
-    <div class="cursor"          aria-hidden="true"></div>
-    <div class="cursor-follower" aria-hidden="true"></div>
+    <div class="cursor" aria-hidden="true"></div>
 
     <!-- ==================== HEADER ==================== -->
     <header id="header">
       <div class="header-inner">
-        <a href="#home" class="logo" aria-label="Anita Dangol — Home">AD</a>
+        <a href="#home" class="logo" aria-label="Anita Dangol — Home">
+          <img src="avatar.png" alt="Anita Dangol" class="logo-avatar" />
+          <span class="logo-text">AD</span>
+        </a>
 
         <nav>
           <ul class="nav-links" id="nav-links" role="list">
@@ -113,10 +111,10 @@
             <a href="https://www.linkedin.com/in/anita-dangol-8084z/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="LinkedIn" role="listitem">
               <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>
             </a>
-            <a href="https://github.com/anitaxcodes423" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="GitHub" role="listitem">
+            <a href="https://github.com/anitaxcodes" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="GitHub" role="listitem">
               <i class="fa-brands fa-github" aria-hidden="true"></i>
             </a>
-            <a href="https://www.instagram.com/anita_dangol_558" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Instagram" role="listitem">
+            <a href="https://www.instagram.com/anita_dangol_?igsh=c2FobzlqaHFweTlv" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Instagram" role="listitem">
               <i class="fa-brands fa-instagram" aria-hidden="true"></i>
             </a>
             <a href="https://medium.com/@anitadangol" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Medium" role="listitem">
@@ -127,10 +125,6 @@
           <a href="#skills" class="btn-primary">VIEW MY EXPERTISE</a>
         </div>
 
-        <!-- Right: avatar -->
-        <div class="hero-right">
-          <img src="avatar.png" alt="Anita Dangol — profile photo" class="hero-avatar" />
-        </div>
 
       </div>
     </section>
@@ -388,7 +382,7 @@
             </div>
             <div class="project-actions">
               <a href="#" class="project-details">View Details <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
-              <a href="https://github.com/anitaxcodes423" target="_blank" rel="noopener noreferrer" class="btn-outline-cyan">View GitHub</a>
+              <a href="https://github.com/anitaxcodes" target="_blank" rel="noopener noreferrer" class="btn-outline-cyan">View GitHub</a>
             </div>
           </div>
 
@@ -405,7 +399,7 @@
             </div>
             <div class="project-actions">
               <a href="#" class="project-details">View Details <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
-              <a href="https://github.com/anitaxcodes423" target="_blank" rel="noopener noreferrer" class="btn-outline-cyan">View GitHub</a>
+              <a href="https://github.com/anitaxcodes" target="_blank" rel="noopener noreferrer" class="btn-outline-cyan">View GitHub</a>
             </div>
           </div>
 
@@ -413,7 +407,7 @@
             <i class="fa-solid fa-folder-open project-icon" aria-hidden="true"></i>
             <h3>View All Projects</h3>
             <p>More projects coming soon. Visit my GitHub for the latest updates.</p>
-            <a href="https://github.com/anitaxcodes423" target="_blank" rel="noopener noreferrer" class="btn-outline-cyan btn-full">VIEW GITHUB</a>
+            <a href="https://github.com/anitaxcodes" target="_blank" rel="noopener noreferrer" class="btn-outline-cyan btn-full">VIEW GITHUB</a>
           </div>
 
         </div>
@@ -519,8 +513,8 @@
           <div class="contact-card card-cyan reveal">
             <i class="fa-brands fa-instagram contact-icon" aria-hidden="true"></i>
             <h3>Instagram</h3>
-            <p class="contact-info">@anita_dangol_558</p>
-            <a href="https://www.instagram.com/anita_dangol_558" target="_blank" rel="noopener noreferrer" class="btn-primary contact-btn">
+            <p class="contact-info">@anita_dangol_</p>
+            <a href="https://www.instagram.com/anita_dangol_?igsh=c2FobzlqaHFweTlv" target="_blank" rel="noopener noreferrer" class="btn-primary contact-btn">
               FOLLOW ME <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
             </a>
           </div>
@@ -545,21 +539,6 @@
 
   </div><!-- /#main-content -->
 
-  <!-- ==================== FIXED SIDE-DOT NAV ==================== -->
-  <nav class="section-nav" id="section-nav" aria-label="Section navigation">
-    <ul role="list">
-      <li><button class="dot-btn" data-section="home"           aria-label="Go to Home"></button></li>
-      <li><button class="dot-btn" data-section="about"          aria-label="Go to About"></button></li>
-      <li><button class="dot-btn" data-section="skills"         aria-label="Go to Expertise"></button></li>
-      <li><button class="dot-btn" data-section="experience"     aria-label="Go to Experience"></button></li>
-      <li><button class="dot-btn" data-section="certifications" aria-label="Go to Certifications"></button></li>
-      <li><button class="dot-btn" data-section="education"      aria-label="Go to Education"></button></li>
-      <li><button class="dot-btn" data-section="projects"       aria-label="Go to Projects"></button></li>
-      <li><button class="dot-btn" data-section="testimonials"   aria-label="Go to Testimonials"></button></li>
-      <li><button class="dot-btn" data-section="blog"           aria-label="Go to Blog"></button></li>
-      <li><button class="dot-btn" data-section="contact"        aria-label="Go to Contact"></button></li>
-    </ul>
-  </nav>
 
   <script src="script.js"></script>
 </body>

@@ -22,43 +22,109 @@ window.addEventListener('load', () => {
 });
 
 /* ============================================================
-   2. CUSTOM CURSOR
-   .cursor   : snaps to mouse
-   .cursor-follower : lags behind with lerp
+   2. STARFIELD CANVAS
+   Static twinkling stars in white, cyan and purple.
    ============================================================ */
-const cursorDot    = document.querySelector('.cursor');
-const cursorRing   = document.querySelector('.cursor-follower');
+(function initStarfield() {
+  const canvas = document.getElementById('starfield');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
 
-let mx = 0, my = 0;       // mouse position
-let fx = 0, fy = 0;       // follower position
+  const STAR_COLORS = ['#ffffff', '#00FFFF', '#9B59B6'];
+  const STAR_COUNT  = 280;
+  let stars = [];
+
+  function resize() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  function buildStars() {
+    stars = Array.from({ length: STAR_COUNT }, () => ({
+      x:       Math.random() * canvas.width,
+      y:       Math.random() * canvas.height,
+      r:       Math.random() * 1.4 + 0.3,
+      color:   STAR_COLORS[Math.floor(Math.random() * STAR_COLORS.length)],
+      alpha:   Math.random() * 0.7 + 0.2,
+      // twinkle: slowly oscillate alpha
+      speed:   Math.random() * 0.008 + 0.002,
+      phase:   Math.random() * Math.PI * 2,
+    }));
+  }
+
+  function drawStars(t) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    stars.forEach(s => {
+      const twinkle = s.alpha * (0.6 + 0.4 * Math.sin(t * s.speed + s.phase));
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = s.color;
+      ctx.globalAlpha = twinkle;
+      ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(drawStars);
+  }
+
+  window.addEventListener('resize', () => { resize(); buildStars(); });
+  resize();
+  buildStars();
+  requestAnimationFrame(drawStars);
+})();
+
+/* ============================================================
+   CUSTOM CURSOR — dot only, sparkle trail on move
+   ============================================================ */
+const cursorDot = document.querySelector('.cursor');
+let mx = 0, my = 0;
+
+const SPARKLE_COLORS = ['#ffffff', '#00FFFF', '#9B59B6'];
 
 document.addEventListener('mousemove', e => {
   mx = e.clientX;
   my = e.clientY;
-  cursorDot.style.left = mx + 'px';
-  cursorDot.style.top  = my + 'px';
+  if (cursorDot) {
+    cursorDot.style.left = mx + 'px';
+    cursorDot.style.top  = my + 'px';
+  }
+  spawnSparkle(mx, my);
 });
 
-(function lerpFollower() {
-  fx += (mx - fx) * 0.11;
-  fy += (my - fy) * 0.11;
-  cursorRing.style.left = fx + 'px';
-  cursorRing.style.top  = fy + 'px';
-  requestAnimationFrame(lerpFollower);
-})();
+let lastSparkle = 0;
+function spawnSparkle(x, y) {
+  const now = Date.now();
+  if (now - lastSparkle < 30) return;   // throttle: max ~33 sparkles/s
+  lastSparkle = now;
 
-// Scale cursor on interactive elements
-document.querySelectorAll('a, button, .contact-reveal-row, [role="button"], .dot-btn')
+  const el = document.createElement('div');
+  el.className = 'sparkle';
+
+  const size   = Math.random() * 3 + 2;          // 2–5px
+  const color  = SPARKLE_COLORS[Math.floor(Math.random() * SPARKLE_COLORS.length)];
+  const offX   = (Math.random() - 0.5) * 14;     // slight scatter
+  const offY   = (Math.random() - 0.5) * 14;
+
+  el.style.cssText = `
+    left:${x + offX}px;
+    top:${y + offY}px;
+    width:${size}px;
+    height:${size}px;
+    background:${color};
+    box-shadow:0 0 ${size * 2}px ${color};
+  `;
+
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 620);
+}
+
+// Grow dot on interactive elements
+document.querySelectorAll('a, button, .contact-reveal-row, [role="button"]')
   .forEach(el => {
     el.addEventListener('mouseenter', () => {
-      cursorDot.style.transform  = 'translate(-50%,-50%) scale(2.2)';
-      cursorRing.style.transform = 'translate(-50%,-50%) scale(1.6)';
-      cursorRing.style.opacity   = '0.35';
+      if (cursorDot) cursorDot.style.transform = 'translate(-50%,-50%) scale(2.4)';
     });
     el.addEventListener('mouseleave', () => {
-      cursorDot.style.transform  = 'translate(-50%,-50%) scale(1)';
-      cursorRing.style.transform = 'translate(-50%,-50%) scale(1)';
-      cursorRing.style.opacity   = '0.55';
+      if (cursorDot) cursorDot.style.transform = 'translate(-50%,-50%) scale(1)';
     });
   });
 
@@ -242,23 +308,12 @@ function startAutoSlide() {
 startAutoSlide();
 
 /* ============================================================
-   7. FIXED SIDE-DOT NAVIGATION
-   One dot per section. Active dot updates on scroll.
-   Clicking a dot smooth-scrolls to that section.
+   7. ACTIVE SECTION TRACKER (used by nav highlight)
    ============================================================ */
 const SECTIONS = [
   'home', 'about', 'skills', 'experience', 'certifications',
   'education', 'projects', 'testimonials', 'blog', 'contact',
 ];
-
-const dotBtns = document.querySelectorAll('.dot-btn');
-
-dotBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    const target = document.getElementById(btn.dataset.section);
-    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
-});
 
 function getActiveSectionId() {
   const mid = window.scrollY + window.innerHeight * 0.45;
@@ -268,13 +323,6 @@ function getActiveSectionId() {
     if (el && el.offsetTop <= mid) active = id;
   });
   return active;
-}
-
-function updateDotNav() {
-  const active = getActiveSectionId();
-  dotBtns.forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.section === active);
-  });
 }
 
 /* ============================================================
@@ -291,16 +339,8 @@ function updateNavHighlight() {
   });
 }
 
-/* ============================================================
-   Scroll listener — dots + nav highlight
-   ============================================================ */
-window.addEventListener('scroll', () => {
-  updateDotNav();
-  updateNavHighlight();
-}, { passive: true });
-
-// Run once on load
-updateDotNav();
+/* Scroll listener — nav highlight */
+window.addEventListener('scroll', updateNavHighlight, { passive: true });
 updateNavHighlight();
 
 /* ============================================================

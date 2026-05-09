@@ -95,48 +95,15 @@ button      { font-family: 'Space Grotesk', sans-serif; }
 #main-content.visible { opacity: 1; }
 
 /* ============================================================
-   5. BACKGROUND — ORBS + GRID
+   5. STARFIELD BACKGROUND
    ============================================================ */
-.bg-animation {
+#starfield {
   position:       fixed;
   inset:          0;
   z-index:        0;
   pointer-events: none;
-  overflow:       hidden;
-}
-
-.orb {
-  position:      absolute;
-  border-radius: 50%;
-  filter:        blur(110px);
-  opacity:       0.22;
-}
-
-.orb-1 {
-  width:      600px;
-  height:     600px;
-  background: var(--purple);
-  top:       -150px;
-  left:      -150px;
-  animation:  floatOrb1 25s ease-in-out infinite;
-}
-
-.orb-2 {
-  width:      500px;
-  height:     500px;
-  background: var(--cyan);
-  bottom:    -120px;
-  right:     -120px;
-  animation:  floatOrb2 30s ease-in-out infinite;
-}
-
-.grid-overlay {
-  position:         absolute;
-  inset:            0;
-  background-image:
-    linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
-  background-size: 50px 50px;
+  width:          100%;
+  height:         100%;
 }
 
 /* ============================================================
@@ -155,17 +122,14 @@ button      { font-family: 'Space Grotesk', sans-serif; }
   will-change:    left, top;
 }
 
-.cursor-follower {
+/* sparkle particles injected by JS — no static styles needed */
+.sparkle {
   position:       fixed;
-  width:          40px;
-  height:         40px;
-  border:         1.5px solid rgba(0, 212, 255, 0.7);
   border-radius:  50%;
   pointer-events: none;
-  z-index:        9998;
+  z-index:        9997;
   transform:      translate(-50%, -50%);
-  opacity:        0.55;
-  will-change:    left, top;
+  animation:      sparkleFade 0.6s ease-out forwards;
 }
 
 /* ============================================================
@@ -223,6 +187,22 @@ header {
 }
 
 .logo {
+  display:     flex;
+  align-items: center;
+  gap:         10px;
+}
+
+.logo-avatar {
+  width:          38px;
+  height:         38px;
+  border-radius:  50%;
+  object-fit:     cover;
+  object-position:center top;
+  border:         2px solid #00FFFF;
+  flex-shrink:    0;
+}
+
+.logo-text {
   font-size:      1.5rem;
   font-weight:    700;
   color:          var(--cyan);
@@ -315,7 +295,7 @@ nav { display: flex; align-items: center; }
   width:           100%;
 }
 
-.hero-left { flex: 0 0 55%; }
+.hero-left { flex: 1; max-width: 700px; }
 
 .hero-welcome {
   color:         var(--text-muted);
@@ -405,22 +385,6 @@ nav { display: flex; align-items: center; }
   transform:   scale(1.12);
 }
 
-/* Avatar */
-.hero-right {
-  flex:            0 0 45%;
-  display:         flex;
-  justify-content: center;
-}
-
-.hero-avatar {
-  width:         340px;
-  height:        340px;
-  border-radius: 50%;
-  object-fit:    cover;
-  object-position: center top;
-  box-shadow:    0 0 0 4px var(--cyan), 0 0 40px rgba(0, 212, 255, 0.40);
-  animation:     avatarPulse 3s ease-in-out infinite;
-}
 
 /* ============================================================
    10. BUTTONS
@@ -567,11 +531,12 @@ nav { display: flex; align-items: center; }
 }
 
 .skill-card {
-  transition: transform var(--t), border-color var(--t);
+  transition: transform var(--t), border-color var(--t), box-shadow var(--t);
 }
 .skill-card:hover {
   transform:    translateY(-5px);
   border-color: rgba(255, 0, 255, 0.50);
+  box-shadow:   0 0 20px rgba(0, 255, 255, 0.3), 0 0 40px rgba(155, 89, 182, 0.2);
 }
 
 .skill-icon {
@@ -608,11 +573,12 @@ nav { display: flex; align-items: center; }
 }
 
 .exp-card {
-  transition: transform var(--t), border-color var(--t);
+  transition: transform var(--t), border-color var(--t), box-shadow var(--t);
 }
 .exp-card:hover {
   transform:    translateY(-5px);
-  border-color: rgba(0, 212, 255, 0.50);
+  border-color: rgba(0, 255, 255, 0.50);
+  box-shadow:   0 0 20px rgba(0, 255, 255, 0.3), 0 0 40px rgba(155, 89, 182, 0.2);
 }
 
 .exp-header {
@@ -652,8 +618,14 @@ nav { display: flex; align-items: center; }
   gap:                   22px;
 }
 
-.cert-card { transition: transform var(--t); }
-.cert-card:hover { transform: translateY(-5px); }
+.cert-card {
+  transition: transform var(--t), border-color var(--t), box-shadow var(--t);
+}
+.cert-card:hover {
+  transform:    translateY(-5px);
+  border-color: rgba(0, 255, 255, 0.50);
+  box-shadow:   0 0 20px rgba(0, 255, 255, 0.3), 0 0 40px rgba(155, 89, 182, 0.2);
+}
 
 .cert-icon { font-size: 2rem; color: #00ff88; display: block; margin-bottom: 18px; }
 
@@ -671,8 +643,14 @@ nav { display: flex; align-items: center; }
   gap:                   22px;
 }
 
-.edu-card { transition: transform var(--t); }
-.edu-card:hover { transform: translateY(-5px); }
+.edu-card {
+  transition: transform var(--t), border-color var(--t), box-shadow var(--t);
+}
+.edu-card:hover {
+  transform:    translateY(-5px);
+  border-color: rgba(0, 255, 255, 0.50);
+  box-shadow:   0 0 20px rgba(0, 255, 255, 0.3), 0 0 40px rgba(155, 89, 182, 0.2);
+}
 
 .edu-icon   { font-size: 2rem; color: var(--purple); display: block; margin-bottom: 18px; }
 .edu-card h3{ font-size: 1.02rem; font-weight: 700; margin-bottom: 6px; }
@@ -928,43 +906,7 @@ footer {
   z-index:    1;
 }
 
-/* ============================================================
-   22. SIDE DOT NAV
-   ============================================================ */
-.section-nav {
-  position:       fixed;
-  right:          20px;
-  top:            50%;
-  transform:      translateY(-50%);
-  z-index:        900;
-}
-
-.section-nav ul {
-  display:        flex;
-  flex-direction: column;
-  gap:            10px;
-}
-
-.dot-btn {
-  display:       block;
-  width:         10px;
-  height:        10px;
-  border-radius: 50%;
-  background:    rgba(0, 0, 0, 0.60);
-  border:        1px solid var(--cyan);
-  cursor:        pointer;
-  padding:       0;
-  transition:    all var(--t);
-}
-
-.dot-btn:hover { background: rgba(0, 212, 255, 0.4); }
-
-.dot-btn.active {
-  background: var(--cyan);
-  width:      14px;
-  height:     14px;
-  box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
-}
+/* dot nav removed */
 
 /* ============================================================
    23. SCROLL REVEAL
@@ -984,26 +926,15 @@ footer {
   50%      { opacity: 0.45; transform: scale(1.18); }
 }
 
-@keyframes floatOrb1 {
-  0%, 100% { transform: translate(0,    0)    scale(1);    }
-  33%      { transform: translate(70px, 45px) scale(1.06); }
-  66%      { transform: translate(-30px,65px) scale(0.94); }
-}
-
-@keyframes floatOrb2 {
-  0%, 100% { transform: translate(0,     0)     scale(1);    }
-  33%      { transform: translate(-55px,-45px) scale(1.08); }
-  66%      { transform: translate( 40px,-65px) scale(0.93); }
-}
-
-@keyframes avatarPulse {
-  0%, 100% { box-shadow: 0 0 0 4px var(--cyan), 0 0 40px rgba(0,212,255,0.40); }
-  50%      { box-shadow: 0 0 0 8px var(--cyan), 0 0 80px rgba(0,212,255,0.65); }
-}
 
 @keyframes blink {
   0%, 49%  { opacity: 1; }
   50%, 100%{ opacity: 0; }
+}
+
+@keyframes sparkleFade {
+  0%   { opacity: 1;   transform: translate(-50%, -50%) scale(1);   }
+  100% { opacity: 0;   transform: translate(-50%, -50%) scale(0.1); }
 }
 
 /* ============================================================
