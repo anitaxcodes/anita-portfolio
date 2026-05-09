@@ -5,503 +5,400 @@
 'use strict';
 
 /* ============================================================
-   INIT — run everything after DOM is ready
+   1. PAGE LOADER
+   After 1500ms: fade loader out, reveal main content.
    ============================================================ */
-document.addEventListener('DOMContentLoaded', () => {
-  initLoader();
-  initScrollProgress();
-  initNavbar();
-  initThemeToggle();
-  initMobileMenu();
-  initParticles();
-  initTypingEffect();
-  initTerminal();
-  initScrollAnimations();
-  initSkillBars();
-  initCounters();
-  initContactForm();
+window.addEventListener('load', () => {
+  const loader = document.getElementById('loader');
+  const main   = document.getElementById('main-content');
+
+  setTimeout(() => {
+    loader.style.opacity = '0';
+    setTimeout(() => {
+      loader.style.display = 'none';
+      main.classList.add('visible');
+    }, 520);
+  }, 1500);
 });
 
 /* ============================================================
-   1. LOADER
+   2. CUSTOM CURSOR
+   .cursor   : snaps to mouse
+   .cursor-follower : lags behind with lerp
    ============================================================ */
-function initLoader() {
-  const loader = document.getElementById('loader');
-  if (!loader) return;
+const cursorDot    = document.querySelector('.cursor');
+const cursorRing   = document.querySelector('.cursor-follower');
 
-  document.body.classList.add('no-scroll');
+let mx = 0, my = 0;       // mouse position
+let fx = 0, fy = 0;       // follower position
 
-  setTimeout(() => {
-    loader.classList.add('fade-out');
-    document.body.classList.remove('no-scroll');
-  }, 2000);
-}
+document.addEventListener('mousemove', e => {
+  mx = e.clientX;
+  my = e.clientY;
+  cursorDot.style.left = mx + 'px';
+  cursorDot.style.top  = my + 'px';
+});
 
-/* ============================================================
-   2. SCROLL PROGRESS BAR
-   ============================================================ */
-function initScrollProgress() {
-  const bar = document.getElementById('scroll-progress');
-  if (!bar) return;
+(function lerpFollower() {
+  fx += (mx - fx) * 0.11;
+  fy += (my - fy) * 0.11;
+  cursorRing.style.left = fx + 'px';
+  cursorRing.style.top  = fy + 'px';
+  requestAnimationFrame(lerpFollower);
+})();
 
-  function update() {
-    const scrolled  = window.scrollY;
-    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-    bar.style.width = maxScroll > 0 ? (scrolled / maxScroll * 100) + '%' : '0%';
-  }
-
-  window.addEventListener('scroll', update, { passive: true });
-  update();
-}
-
-/* ============================================================
-   3. NAVBAR — scroll style + active link highlight
-   ============================================================ */
-function initNavbar() {
-  const navbar   = document.getElementById('navbar');
-  const navLinks = document.querySelectorAll('.nav-link');
-  const sections = Array.from(document.querySelectorAll('section[id]'));
-  if (!navbar) return;
-
-  function onScroll() {
-    navbar.classList.toggle('scrolled', window.scrollY > 50);
-
-    // highlight the section whose top is closest above viewport mid
-    const mid = window.scrollY + window.innerHeight / 3;
-    let active = sections[0];
-    sections.forEach(s => {
-      if (s.offsetTop <= mid) active = s;
+// Scale cursor on interactive elements
+document.querySelectorAll('a, button, .contact-reveal-row, [role="button"], .dot-btn')
+  .forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursorDot.style.transform  = 'translate(-50%,-50%) scale(2.2)';
+      cursorRing.style.transform = 'translate(-50%,-50%) scale(1.6)';
+      cursorRing.style.opacity   = '0.35';
     });
-
-    navLinks.forEach(link => {
-      link.classList.toggle('active', link.getAttribute('href') === '#' + active.id);
-    });
-  }
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
-
-  // smooth scroll on nav clicks
-  navLinks.forEach(link => {
-    link.addEventListener('click', e => {
-      const target = document.querySelector(link.getAttribute('href'));
-      if (!target) return;
-      e.preventDefault();
-      window.scrollTo({ top: target.offsetTop - 76, behavior: 'smooth' });
+    el.addEventListener('mouseleave', () => {
+      cursorDot.style.transform  = 'translate(-50%,-50%) scale(1)';
+      cursorRing.style.transform = 'translate(-50%,-50%) scale(1)';
+      cursorRing.style.opacity   = '0.55';
     });
   });
-}
 
 /* ============================================================
-   4. DARK / LIGHT THEME TOGGLE
+   3. TYPING / ROTATING HERO TITLE
+   Fades out, swaps phrase, fades in every 2500ms.
    ============================================================ */
-function initThemeToggle() {
-  const btn = document.getElementById('theme-toggle');
-  if (!btn) return;
+const phrases = [
+  'Security Enthusiast',
+  'Digital Forensics Student',
+  'CTF Player',
+  'Defensive Security Analyst',
+];
 
-  const saved = localStorage.getItem('ad-theme') || 'dark';
-  document.documentElement.setAttribute('data-theme', saved);
+const typedEl = document.getElementById('typed-text');
+let phraseIdx = 0;
 
-  btn.addEventListener('click', () => {
-    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('ad-theme', next);
-  });
-}
+if (typedEl) {
+  typedEl.textContent = phrases[0];
 
-/* ============================================================
-   5. MOBILE NAVIGATION MENU
-   ============================================================ */
-function initMobileMenu() {
-  const btn   = document.getElementById('mobile-menu-btn');
-  const links = document.getElementById('nav-links');
-  if (!btn || !links) return;
+  setInterval(() => {
+    typedEl.style.transition = 'opacity 0.4s ease';
+    typedEl.style.opacity    = '0';
 
-  function close() {
-    btn.classList.remove('open');
-    links.classList.remove('open');
-    btn.setAttribute('aria-expanded', 'false');
-  }
-
-  btn.addEventListener('click', () => {
-    const isOpen = btn.classList.toggle('open');
-    links.classList.toggle('open', isOpen);
-    btn.setAttribute('aria-expanded', String(isOpen));
-  });
-
-  links.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
-  document.addEventListener('click', e => {
-    if (!btn.contains(e.target) && !links.contains(e.target)) close();
-  });
-
-  // close on Escape key
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') close();
-  });
-}
-
-/* ============================================================
-   6. CANVAS PARTICLE SYSTEM
-   ============================================================ */
-function initParticles() {
-  const canvas = document.getElementById('particles-canvas');
-  if (!canvas || !canvas.getContext) return;
-
-  const ctx = canvas.getContext('2d');
-  let particles = [];
-  let rafId;
-
-  const COLORS = [
-    'rgba(126, 231, 193,',   // mint
-    'rgba(184, 168, 255,',   // lavender
-    'rgba(229, 231, 235,',   // light text
-  ];
-
-  /* ---- sizing ---- */
-  function setSize() {
-    canvas.width  = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
-  }
-
-  /* ---- Particle class ---- */
-  class Particle {
-    constructor() { this.init(); }
-
-    init() {
-      this.x  = Math.random() * canvas.width;
-      this.y  = Math.random() * canvas.height;
-      this.vx = (Math.random() - 0.5) * 0.35;
-      this.vy = (Math.random() - 0.5) * 0.35;
-      this.r  = Math.random() * 1.4 + 0.4;
-      this.a  = Math.random() * 0.45 + 0.1;
-      this.col= COLORS[Math.floor(Math.random() * COLORS.length)];
-    }
-
-    update() {
-      this.x += this.vx;
-      this.y += this.vy;
-      if (this.x < 0 || this.x > canvas.width)  this.vx *= -1;
-      if (this.y < 0 || this.y > canvas.height)  this.vy *= -1;
-    }
-
-    draw() {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-      ctx.fillStyle = this.col + this.a + ')';
-      ctx.fill();
-    }
-  }
-
-  /* ---- build particle pool ---- */
-  function buildPool() {
-    const density = Math.floor(canvas.width * canvas.height / 12000);
-    const count   = Math.min(density, 80);
-    particles = Array.from({ length: count }, () => new Particle());
-  }
-
-  /* ---- draw connecting lines ---- */
-  function drawWeb() {
-    const max = 115;
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        const dx   = particles[i].x - particles[j].x;
-        const dy   = particles[i].y - particles[j].y;
-        const dist = Math.hypot(dx, dy);
-        if (dist < max) {
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = `rgba(126, 231, 193, ${(1 - dist / max) * 0.09})`;
-          ctx.lineWidth = 0.5;
-          ctx.stroke();
-        }
-      }
-    }
-  }
-
-  /* ---- animation loop ---- */
-  function loop() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawWeb();
-    particles.forEach(p => { p.update(); p.draw(); });
-    rafId = requestAnimationFrame(loop);
-  }
-
-  /* ---- responsive resize ---- */
-  const ro = new ResizeObserver(() => {
-    cancelAnimationFrame(rafId);
-    setSize();
-    buildPool();
-    loop();
-  });
-  ro.observe(canvas.parentElement || canvas);
-
-  setSize();
-  buildPool();
-  loop();
-}
-
-/* ============================================================
-   7. TYPING EFFECT
-   ============================================================ */
-function initTypingEffect() {
-  const el = document.getElementById('typed-text');
-  if (!el) return;
-
-  const phrases = [
-    'Cybersecurity Student',
-    'CTF Learner',
-    'SEO Content Writer',
-    'Creative Digital Enthusiast',
-    'Ethical Hacking Explorer',
-  ];
-
-  let pIdx    = 0;
-  let cIdx    = 0;
-  let erasing = false;
-  let timer;
-
-  function tick() {
-    const phrase = phrases[pIdx];
-
-    if (!erasing) {
-      el.textContent = phrase.slice(0, ++cIdx);
-      if (cIdx >= phrase.length) {
-        // pause then start erasing
-        timer = setTimeout(() => { erasing = true; tick(); }, 2400);
-        return;
-      }
-      timer = setTimeout(tick, 78);
-    } else {
-      el.textContent = phrase.slice(0, --cIdx);
-      if (cIdx <= 0) {
-        erasing = false;
-        pIdx    = (pIdx + 1) % phrases.length;
-        timer   = setTimeout(tick, 480);
-        return;
-      }
-      timer = setTimeout(tick, 44);
-    }
-  }
-
-  // delay first start until after loader
-  setTimeout(tick, 2200);
-}
-
-/* ============================================================
-   8. ANIMATED TERMINAL
-   ============================================================ */
-function initTerminal() {
-  const container = document.getElementById('terminal-lines');
-  if (!container) return;
-
-  const script = [
-    { kind: 'prompt',  cmd:  'whoami',              delay: 600  },
-    { kind: 'output',  text: 'anita dangol — cybersecurity learner', delay: 960  },
-    { kind: 'blank',                                 delay: 1200 },
-    { kind: 'prompt',  cmd:  'ls skills/',           delay: 1500 },
-    { kind: 'output',  text: 'ctf/  cryptography/  linux/  web-security/', delay: 1860 },
-    { kind: 'blank',                                 delay: 2100 },
-    { kind: 'prompt',  cmd:  'cat mission.txt',      delay: 2500 },
-    { kind: 'output',  text: 'learn. build. grow. never stop.', delay: 2860 },
-    { kind: 'blank',                                 delay: 3100 },
-    { kind: 'comment', text: '# currently: solving CTF challenges 🚩', delay: 3500 },
-  ];
-
-  function appendLine(html) {
-    const span = document.createElement('span');
-    span.className   = 't-line';
-    span.innerHTML   = html;
-    container.appendChild(span);
-    container.scrollTop = container.scrollHeight;
-  }
-
-  script.forEach(({ kind, cmd, text, delay }) => {
     setTimeout(() => {
-      switch (kind) {
-        case 'prompt':
-          appendLine(
-            `<span class="t-prompt">anita@cyber:~$</span> <span class="t-cmd">${escHtml(cmd)}</span>`
-          );
-          break;
-        case 'output':
-          appendLine(`<span class="t-output">${escHtml(text)}</span>`);
-          break;
-        case 'comment':
-          appendLine(`<span class="t-comment">${escHtml(text)}</span>`);
-          break;
-        case 'blank':
-          appendLine('&nbsp;');
-          break;
-      }
-    }, delay);
-  });
-}
-
-/* tiny XSS guard for terminal strings */
-function escHtml(str) {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+      phraseIdx = (phraseIdx + 1) % phrases.length;
+      typedEl.textContent = phrases[phraseIdx];
+      typedEl.style.opacity = '1';
+    }, 420);
+  }, 2500);
 }
 
 /* ============================================================
-   9. SCROLL-REVEAL  (Intersection Observer)
+   4. ANIMATED STAT COUNTERS
+   Counts from 0 → target over 2000ms (ease-out cubic).
+   Triggered by Intersection Observer on #about.
    ============================================================ */
-function initScrollAnimations() {
-  const els = document.querySelectorAll('[data-animate]');
-  if (!('IntersectionObserver' in window)) {
-    // fallback: just show everything
-    els.forEach(el => el.classList.add('in-view'));
-    return;
-  }
-
-  const obs = new IntersectionObserver(
-    entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in-view');
-          obs.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.1, rootMargin: '0px 0px -55px 0px' }
-  );
-
-  els.forEach(el => obs.observe(el));
-}
-
-/* ============================================================
-   10. SKILL BAR ANIMATION
-   ============================================================ */
-function initSkillBars() {
-  const fills = document.querySelectorAll('.level-fill');
-  if (!fills.length) return;
-
-  const obs = new IntersectionObserver(
-    entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.width = entry.target.dataset.width || '0%';
-          obs.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.5 }
-  );
-
-  fills.forEach(f => obs.observe(f));
-}
-
-/* ============================================================
-   11. COUNTER ANIMATION (about stats)
-   ============================================================ */
-function initCounters() {
-  const counters = document.querySelectorAll('.stat-number[data-target]');
-  if (!counters.length) return;
-
-  const obs = new IntersectionObserver(
-    entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          runCounter(entry.target);
-          obs.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.6 }
-  );
-
-  counters.forEach(c => obs.observe(c));
-}
-
 function runCounter(el) {
   const target   = parseInt(el.dataset.target, 10);
-  const duration = 1700;
-  const start    = performance.now();
+  const duration = 2000;
+  const startTs  = performance.now();
 
-  function frame(now) {
-    const progress = Math.min((now - start) / duration, 1);
-    const eased    = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+  function tick(now) {
+    const elapsed  = now - startTs;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased    = 1 - Math.pow(1 - progress, 3);
     el.textContent = Math.floor(eased * target);
-    if (progress < 1) {
-      requestAnimationFrame(frame);
-    } else {
-      el.textContent = target + '+';
-    }
+    if (progress < 1) requestAnimationFrame(tick);
+    else el.textContent = target;
   }
 
-  requestAnimationFrame(frame);
+  requestAnimationFrame(tick);
+}
+
+const aboutSection = document.getElementById('about');
+if (aboutSection) {
+  const statsObs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.stat-number').forEach(runCounter);
+        statsObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.35 });
+
+  statsObs.observe(aboutSection);
 }
 
 /* ============================================================
-   12. CONTACT FORM
+   5. SCROLL REVEAL ANIMATIONS
+   Adds .visible to .reveal elements as they enter viewport.
+   Children are staggered by their sibling index (0.1s each).
    ============================================================ */
-function initContactForm() {
-  const form     = document.getElementById('contact-form');
-  if (!form) return;
+const revealEls = document.querySelectorAll('.reveal');
 
-  const btnText    = form.querySelector('.btn-text');
-  const btnSending = form.querySelector('.btn-sending');
-  const success    = document.getElementById('form-success');
+if ('IntersectionObserver' in window) {
+  const revealObs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
 
-  form.addEventListener('submit', e => {
-    e.preventDefault();
+      // Find sibling index within parent grid for stagger
+      const siblings = Array.from(entry.target.parentElement?.children || []);
+      const idx      = siblings.indexOf(entry.target);
+      entry.target.style.transitionDelay = (idx * 0.10) + 's';
+      entry.target.classList.add('visible');
+      revealObs.unobserve(entry.target);
+    });
+  }, { threshold: 0.10, rootMargin: '0px 0px -40px 0px' });
 
-    // Basic client-side validation
-    const name    = form.name.value.trim();
-    const email   = form.email.value.trim();
-    const message = form.message.value.trim();
-
-    if (!name || !email || !message) return;
-    if (!isValidEmail(email)) {
-      form.email.focus();
-      return;
-    }
-
-    // Show loading state
-    if (btnText)    btnText.classList.add('hidden');
-    if (btnSending) btnSending.classList.remove('hidden');
-
-    /*
-      Replace this setTimeout with your actual form submission:
-      e.g. fetch('/api/contact', { method:'POST', body: new FormData(form) })
-    */
-    setTimeout(() => {
-      if (btnText)    btnText.classList.remove('hidden');
-      if (btnSending) btnSending.classList.add('hidden');
-      if (success)    success.classList.remove('hidden');
-
-      form.reset();
-
-      setTimeout(() => {
-        if (success) success.classList.add('hidden');
-      }, 6000);
-    }, 1600);
-  });
-
-  // Floating label feel: add/remove focused class
-  form.querySelectorAll('.form-input').forEach(input => {
-    input.addEventListener('focus', () => input.closest('.form-group')?.classList.add('focused'));
-    input.addEventListener('blur',  () => input.closest('.form-group')?.classList.remove('focused'));
-  });
-}
-
-function isValidEmail(email) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  revealEls.forEach(el => revealObs.observe(el));
+} else {
+  // Fallback: show all immediately
+  revealEls.forEach(el => el.classList.add('visible'));
 }
 
 /* ============================================================
-   13. FOOTER NAV — smooth scroll (handles links not in navbar)
+   6. TESTIMONIAL SLIDER
+   JS-powered, one card visible at a time.
+   Prev / Next buttons + dot indicators + auto-advance 5s.
+   ============================================================ */
+const testimonials = [
+  {
+    quote: '"Anita demonstrates exceptional dedication to cybersecurity concepts. Her analytical approach to problem-solving and ability to communicate technical findings clearly sets her apart."',
+    name:  'Apil Chang',
+    title: 'Lecturer, The Westminster College',
+  },
+  {
+    quote: '"Anita\'s structured reports and attention to detail in data analysis made a real impact on our content strategy. A highly reliable and proactive team member."',
+    name:  'Sanish Shrestha',
+    title: 'Manager, Nepsay Mart',
+  },
+  {
+    quote: '"Her ability to translate complex digital insights into clear, actionable recommendations for non-technical stakeholders is a rare and valuable skill."',
+    name:  'Mandip Dhakal',
+    title: 'Supervisor, Regulus Treks and Expedition',
+  },
+];
+
+let slideIdx = 0;
+let autoSlideTimer;
+
+const tCard  = document.getElementById('testimonial-card');
+const tQuote = document.getElementById('testimonial-quote');
+const tName  = document.getElementById('author-name');
+const tTitle = document.getElementById('author-title');
+const dotsEl = document.getElementById('slider-dots');
+
+function buildDots() {
+  if (!dotsEl) return;
+  dotsEl.innerHTML = '';
+  testimonials.forEach((_, i) => {
+    const btn = document.createElement('button');
+    btn.className   = 'slider-dot' + (i === slideIdx ? ' active' : '');
+    btn.setAttribute('aria-label', `Go to testimonial ${i + 1}`);
+    btn.setAttribute('role', 'tab');
+    btn.addEventListener('click', () => goSlide(i));
+    dotsEl.appendChild(btn);
+  });
+}
+
+function goSlide(idx) {
+  if (!tCard) return;
+
+  tCard.style.opacity = '0';
+
+  setTimeout(() => {
+    slideIdx      = ((idx % testimonials.length) + testimonials.length) % testimonials.length;
+    const t       = testimonials[slideIdx];
+    tQuote.textContent = t.quote;
+    tName.textContent  = t.name;
+    tTitle.textContent = t.title;
+    tCard.style.opacity = '1';
+    buildDots();
+  }, 380);
+}
+
+// Init
+if (tQuote) {
+  const t = testimonials[0];
+  tQuote.textContent = t.quote;
+  tName.textContent  = t.name;
+  tTitle.textContent = t.title;
+  buildDots();
+}
+
+document.getElementById('prev-btn')?.addEventListener('click', () => {
+  clearInterval(autoSlideTimer);
+  goSlide(slideIdx - 1);
+  startAutoSlide();
+});
+
+document.getElementById('next-btn')?.addEventListener('click', () => {
+  clearInterval(autoSlideTimer);
+  goSlide(slideIdx + 1);
+  startAutoSlide();
+});
+
+function startAutoSlide() {
+  autoSlideTimer = setInterval(() => goSlide(slideIdx + 1), 5000);
+}
+startAutoSlide();
+
+/* ============================================================
+   7. FIXED SIDE-DOT NAVIGATION
+   One dot per section. Active dot updates on scroll.
+   Clicking a dot smooth-scrolls to that section.
+   ============================================================ */
+const SECTIONS = [
+  'home', 'about', 'skills', 'experience', 'certifications',
+  'education', 'projects', 'testimonials', 'blog', 'contact',
+];
+
+const dotBtns = document.querySelectorAll('.dot-btn');
+
+dotBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const target = document.getElementById(btn.dataset.section);
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+function getActiveSectionId() {
+  const mid = window.scrollY + window.innerHeight * 0.45;
+  let active = SECTIONS[0];
+  SECTIONS.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.offsetTop <= mid) active = id;
+  });
+  return active;
+}
+
+function updateDotNav() {
+  const active = getActiveSectionId();
+  dotBtns.forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.section === active);
+  });
+}
+
+/* ============================================================
+   8. ACTIVE HEADER NAV LINK
+   Highlights the nav link matching the current section.
+   ============================================================ */
+const navLinks = document.querySelectorAll('.nav-link');
+
+function updateNavHighlight() {
+  const active = getActiveSectionId();
+  navLinks.forEach(link => {
+    const href = link.getAttribute('href').replace('#', '');
+    link.classList.toggle('active', href === active);
+  });
+}
+
+/* ============================================================
+   Scroll listener — dots + nav highlight
+   ============================================================ */
+window.addEventListener('scroll', () => {
+  updateDotNav();
+  updateNavHighlight();
+}, { passive: true });
+
+// Run once on load
+updateDotNav();
+updateNavHighlight();
+
+/* ============================================================
+   9. HAMBURGER MOBILE MENU
+   Toggles .open on nav-links. Closes on link click or Escape.
+   ============================================================ */
+const hamburgerBtn = document.getElementById('hamburger');
+const navList      = document.getElementById('nav-links');
+
+function closeMenu() {
+  hamburgerBtn?.classList.remove('open');
+  navList?.classList.remove('open');
+  hamburgerBtn?.setAttribute('aria-expanded', 'false');
+}
+
+hamburgerBtn?.addEventListener('click', () => {
+  const isOpen = hamburgerBtn.classList.toggle('open');
+  navList.classList.toggle('open', isOpen);
+  hamburgerBtn.setAttribute('aria-expanded', String(isOpen));
+});
+
+navList?.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', closeMenu);
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeMenu();
+});
+
+document.addEventListener('click', e => {
+  if (!hamburgerBtn?.contains(e.target) && !navList?.contains(e.target)) {
+    closeMenu();
+  }
+});
+
+/* ============================================================
+   10. CONTACT INFO REVEAL
+   Email: decoded from Base64 on click.
+   Phone: assembled from parts on click.
+   ============================================================ */
+const EMAIL_B64   = 'YW5pa2FkYW5nb2xAZ21haWwuY29t';
+const PHONE_PARTS = ['+977', '-', '9808507929'];
+
+let emailShown = false;
+let phoneShown = false;
+
+// Hero email row
+const emailRow = document.getElementById('email-row');
+emailRow?.addEventListener('click', revealEmail);
+emailRow?.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') revealEmail(); });
+
+function revealEmail() {
+  if (emailShown) return;
+  const decoded = atob(EMAIL_B64);
+  emailRow.querySelector('.reveal-text').textContent = decoded;
+  emailShown = true;
+
+  // Sync contact section reveal as well
+  const contactEl = document.getElementById('contact-email-reveal');
+  if (contactEl) contactEl.textContent = decoded;
+}
+
+// Hero phone row
+const phoneRow = document.getElementById('phone-row');
+phoneRow?.addEventListener('click', revealPhone);
+phoneRow?.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') revealPhone(); });
+
+function revealPhone() {
+  if (phoneShown) return;
+  phoneRow.querySelector('.reveal-text').textContent = PHONE_PARTS.join('');
+  phoneShown = true;
+}
+
+// Contact section email card reveal
+const contactEmailEl = document.getElementById('contact-email-reveal');
+contactEmailEl?.addEventListener('click', () => {
+  if (contactEmailEl.textContent === 'Click to reveal') {
+    contactEmailEl.textContent = atob(EMAIL_B64);
+  }
+});
+contactEmailEl?.addEventListener('keydown', e => {
+  if ((e.key === 'Enter' || e.key === ' ') && contactEmailEl.textContent === 'Click to reveal') {
+    contactEmailEl.textContent = atob(EMAIL_B64);
+  }
+});
+
+/* ============================================================
+   11. SMOOTH SCROLL for all anchor links
+   CSS scroll-behavior:smooth already handles most cases;
+   this JS ensures header offset is respected.
    ============================================================ */
 document.querySelectorAll('a[href^="#"]').forEach(link => {
   link.addEventListener('click', e => {
-    const id     = link.getAttribute('href');
-    const target = document.querySelector(id);
+    const id     = link.getAttribute('href').slice(1);
+    const target = document.getElementById(id);
     if (!target) return;
     e.preventDefault();
-    window.scrollTo({ top: target.offsetTop - 76, behavior: 'smooth' });
+    const offset = target.getBoundingClientRect().top + window.scrollY - 76;
+    window.scrollTo({ top: offset, behavior: 'smooth' });
   });
 });
