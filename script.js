@@ -228,18 +228,23 @@ if ('IntersectionObserver' in window) {
 const testimonials = [
   {
     quote: '"Anita demonstrates exceptional dedication to cybersecurity concepts. Her analytical approach to problem-solving and ability to communicate technical findings clearly sets her apart."',
-    name:  'Apil Chang',
-    title: 'Lecturer, The Westminster College',
+    name:  'Apil Chand',
+    title: 'Lecturer',
   },
   {
     quote: '"Anita\'s structured reports and attention to detail in data analysis made a real impact on our content strategy. A highly reliable and proactive team member."',
-    name:  'Sanish Shrestha',
+    name:  'Sandesh Neupane',
     title: 'Manager, Nepsay Mart',
   },
   {
     quote: '"Her ability to translate complex digital insights into clear, actionable recommendations for non-technical stakeholders is a rare and valuable skill."',
-    name:  'Mandip Dhakal',
-    title: 'Supervisor, Regulus Treks and Expedition',
+    name:  'Madan Bhandari',
+    title: 'Regulus Supervisor, Regulus Treks and Expedition',
+  },
+  {
+    quote: '"Working with her has been a smooth experience she handles every technical task with great care, precision, and responsibility."',
+    name:  'Sunita Dangol',
+    title: 'CEO, GoNepal Explore',
   },
 ];
 

@@ -45,7 +45,7 @@ body {
   color:       var(--text);
   line-height: 1.72;
   overflow-x:  hidden;
-  cursor:      none;
+  cursor:      auto;
 }
 
 a           { color: inherit; text-decoration: none; }
@@ -107,20 +107,10 @@ button      { font-family: 'Space Grotesk', sans-serif; }
 }
 
 /* ============================================================
-   6. CUSTOM CURSOR
+   6. CURSOR — default browser pointer restored
+      (sparkle trail handled entirely by JS)
    ============================================================ */
-.cursor {
-  position:       fixed;
-  width:          10px;
-  height:         10px;
-  background:     var(--cyan);
-  border-radius:  50%;
-  pointer-events: none;
-  z-index:        9999;
-  transform:      translate(-50%, -50%);
-  transition:     transform 0.12s ease;
-  will-change:    left, top;
-}
+.cursor { display: none; }
 
 /* sparkle particles injected by JS — no static styles needed */
 .sparkle {
@@ -255,7 +245,7 @@ nav { display: flex; align-items: center; }
   background:    transparent;
   border:        1px solid rgba(0, 212, 255, 0.2);
   border-radius: 4px;
-  cursor:        none;
+  cursor:        pointer;
   margin-left:   20px;
 }
 
@@ -489,7 +479,15 @@ nav { display: flex; align-items: center; }
 
 .about-stats { display: flex; flex-direction: column; gap: 18px; }
 
-.stat-card { text-align: center; }
+.stat-card {
+  text-align:  center;
+  transition:  border-color var(--t), box-shadow var(--t), transform var(--t);
+}
+.stat-card:hover {
+  transform:    translateY(-4px);
+  border-color: rgba(0, 255, 255, 0.55);
+  box-shadow:   0 0 24px rgba(0, 255, 255, 0.40);
+}
 
 .stat-number-wrap {
   display:     flex;
@@ -535,8 +533,8 @@ nav { display: flex; align-items: center; }
 }
 .skill-card:hover {
   transform:    translateY(-5px);
-  border-color: rgba(255, 0, 255, 0.50);
-  box-shadow:   0 0 20px rgba(0, 255, 255, 0.3), 0 0 40px rgba(155, 89, 182, 0.2);
+  border-color: rgba(236, 72, 153, 0.55);
+  box-shadow:   0 0 24px rgba(236, 72, 153, 0.45);
 }
 
 .skill-icon {
@@ -577,8 +575,8 @@ nav { display: flex; align-items: center; }
 }
 .exp-card:hover {
   transform:    translateY(-5px);
-  border-color: rgba(0, 255, 255, 0.50);
-  box-shadow:   0 0 20px rgba(0, 255, 255, 0.3), 0 0 40px rgba(155, 89, 182, 0.2);
+  border-color: rgba(0, 255, 255, 0.55);
+  box-shadow:   0 0 24px rgba(0, 255, 255, 0.40);
 }
 
 .exp-header {
@@ -623,8 +621,8 @@ nav { display: flex; align-items: center; }
 }
 .cert-card:hover {
   transform:    translateY(-5px);
-  border-color: rgba(0, 255, 255, 0.50);
-  box-shadow:   0 0 20px rgba(0, 255, 255, 0.3), 0 0 40px rgba(155, 89, 182, 0.2);
+  border-color: rgba(16, 185, 129, 0.55);
+  box-shadow:   0 0 24px rgba(16, 185, 129, 0.45);
 }
 
 .cert-icon { font-size: 2rem; color: #00ff88; display: block; margin-bottom: 18px; }
@@ -648,8 +646,8 @@ nav { display: flex; align-items: center; }
 }
 .edu-card:hover {
   transform:    translateY(-5px);
-  border-color: rgba(0, 255, 255, 0.50);
-  box-shadow:   0 0 20px rgba(0, 255, 255, 0.3), 0 0 40px rgba(155, 89, 182, 0.2);
+  border-color: rgba(139, 92, 246, 0.55);
+  box-shadow:   0 0 24px rgba(139, 92, 246, 0.50);
 }
 
 .edu-icon   { font-size: 2rem; color: var(--purple); display: block; margin-bottom: 18px; }
@@ -672,11 +670,12 @@ nav { display: flex; align-items: center; }
   display:        flex;
   flex-direction: column;
   gap:            14px;
-  transition:     transform var(--t), border-color var(--t);
+  transition:     transform var(--t), border-color var(--t), box-shadow var(--t);
 }
 .project-card:hover {
   transform:    translateY(-5px);
-  border-color: rgba(0, 212, 255, 0.50);
+  border-color: rgba(0, 255, 255, 0.55);
+  box-shadow:   0 0 24px rgba(0, 255, 255, 0.40);
 }
 
 .project-icon  { font-size: 2rem; color: var(--cyan); }
@@ -841,9 +840,13 @@ nav { display: flex; align-items: center; }
   display:        flex;
   flex-direction: column;
   gap:            12px;
-  transition:     transform var(--t);
+  transition:     transform var(--t), border-color var(--t), box-shadow var(--t);
 }
-.blog-card:hover { transform: translateY(-5px); }
+.blog-card:hover {
+  transform:    translateY(-5px);
+  border-color: rgba(236, 72, 153, 0.55);
+  box-shadow:   0 0 24px rgba(236, 72, 153, 0.45);
+}
 
 .blog-icon { font-size: 2rem; color: #ff00ff; }
 .blog-year { color: var(--cyan); font-size: 0.8rem; font-weight: 600; letter-spacing: 1px; }
