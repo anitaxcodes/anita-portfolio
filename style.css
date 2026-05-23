@@ -54,6 +54,60 @@ img         { max-width: 100%; display: block; }
 button      { font-family: 'Space Grotesk', sans-serif; }
 
 /* ============================================================
+   2B. INTRO OVERLAY
+   ============================================================ */
+#intro-overlay {
+  position:        fixed;
+  inset:           0;
+  z-index:         20000;
+  background:      #000;
+  display:         flex;
+  flex-direction:  column;
+  align-items:     center;
+  justify-content: center;
+  overflow:        hidden;
+  transition:      transform 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+}
+#intro-overlay.slide-out { transform: translateY(-100%); }
+
+.intro-name {
+  font-size:      clamp(5rem, 18vw, 13rem);
+  font-weight:    700;
+  letter-spacing: 0.12em;
+  color:          #fff;
+  line-height:    1;
+  text-align:     center;
+}
+
+.intro-ticker-wrap {
+  position: absolute;
+  bottom:   52px;
+  left:     0;
+  right:    0;
+  overflow: hidden;
+}
+
+.intro-ticker {
+  display:    flex;
+  white-space:nowrap;
+  animation:  introTicker 12s linear infinite;
+}
+
+.intro-ticker span {
+  color:          rgba(255, 255, 255, 0.12);
+  font-size:      0.72rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  font-weight:    600;
+  flex-shrink:    0;
+}
+
+@keyframes introTicker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ============================================================
    3. LOADER
    ============================================================ */
 #loader {
@@ -839,7 +893,7 @@ nav { display: flex; align-items: center; }
    ============================================================ */
 .blog-grid {
   display:               grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap:                   22px;
 }
 
@@ -965,6 +1019,7 @@ footer {
   .hero-avatar { width: 280px; height: 280px; }
   .nav-links   { gap: 18px; }
   .nav-link    { font-size: 0.72rem; }
+  .blog-grid   { grid-template-columns: repeat(2, 1fr); }
 }
 
 /* ============================================================

@@ -5,6 +5,19 @@
 'use strict';
 
 /* ============================================================
+   0. INTRO OVERLAY
+   Slides up after 2.5 s to reveal the main site.
+   ============================================================ */
+(function initIntro() {
+  const overlay = document.getElementById('intro-overlay');
+  if (!overlay) return;
+  setTimeout(() => {
+    overlay.classList.add('slide-out');
+    setTimeout(() => { overlay.style.display = 'none'; }, 900);
+  }, 2500);
+})();
+
+/* ============================================================
    1. PAGE LOADER
    After 1500ms: fade loader out, reveal main content.
    ============================================================ */
@@ -135,7 +148,6 @@ document.querySelectorAll('a, button, .contact-reveal-row, [role="button"]')
 const phrases = [
   'Security Enthusiast',
   'Digital Forensics Student',
-  'CTF Player',
   'Defensive Security Analyst',
 ];
 
