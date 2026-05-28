@@ -36,14 +36,14 @@ window.addEventListener('load', () => {
 
 /* ============================================================
    2. WEBGL BACKGROUND — Three.js
-   Wireframe icosahedron cores + particle cloud, mouse parallax.
+   Icosahedron on right side, forensics orbit rings, mini stars.
    ============================================================ */
 (function initWebGL() {
   const container = document.getElementById('webgl-container');
   if (!container || typeof THREE === 'undefined') return;
 
   const scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(0x000000, 0.04);
+  scene.fog = new THREE.FogExp2(0x000000, 0.022);
 
   const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
   camera.position.z = 15;
@@ -53,102 +53,112 @@ window.addEventListener('load', () => {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   container.appendChild(renderer.domElement);
 
-  // Outer wireframe icosahedron
-  const coreGeo = new THREE.IcosahedronGeometry(4, 2);
-  const coreMat = new THREE.MeshBasicMaterial({ color: 0x8b5cf6, wireframe: true, transparent: true, opacity: 0.15 });
-  const coreMesh = new THREE.Mesh(coreGeo, coreMat);
-  scene.add(coreMesh);
+  // ── Group — sits in the right-side empty space of the hero ──
+  const group = new THREE.Group();
+  group.position.x = 7;
+  scene.add(group);
 
-  // Inner wireframe icosahedron
-  const innerGeo = new THREE.IcosahedronGeometry(2.5, 0);
-  const innerMat = new THREE.MeshBasicMaterial({ color: 0x00ffcc, wireframe: true, transparent: true, opacity: 0.3 });
-  const innerMesh = new THREE.Mesh(innerGeo, innerMat);
-  scene.add(innerMesh);
+  // Wireframe icosahedron (outer only — small inner removed)
+  const coreMesh = new THREE.Mesh(
+    new THREE.IcosahedronGeometry(4, 2),
+    new THREE.MeshBasicMaterial({ color: 0x8b5cf6, wireframe: true, transparent: true, opacity: 0.18 })
+  );
+  group.add(coreMesh);
 
-  // Particle cloud (cyan ↔ purple gradient, spherical distribution)
-  const pGeo   = new THREE.BufferGeometry();
-  const COUNT   = 3000;
-  const pos     = new Float32Array(COUNT * 3);
-  const col     = new Float32Array(COUNT * 3);
-  const c1      = new THREE.Color(0x00ffcc);
-  const c2      = new THREE.Color(0x8b5cf6);
+  // Particle cloud tightly around the icosahedron
+  const pGeo = new THREE.BufferGeometry();
+  const COUNT = 2200;
+  const pos   = new Float32Array(COUNT * 3);
+  const col   = new Float32Array(COUNT * 3);
+  const c1    = new THREE.Color(0x00ffcc);
+  const c2    = new THREE.Color(0x8b5cf6);
 
   for (let i = 0; i < COUNT * 3; i += 3) {
-    const r     = 15 + Math.random() * 20;
+    const r     = 5 + Math.random() * 9;
     const theta = 2 * Math.PI * Math.random();
     const phi   = Math.acos(2 * Math.random() - 1);
     pos[i]     = r * Math.sin(phi) * Math.cos(theta);
     pos[i + 1] = r * Math.sin(phi) * Math.sin(theta);
     pos[i + 2] = r * Math.cos(phi);
-    const mixed = c1.clone().lerp(c2, Math.random());
-    col[i]     = mixed.r;
-    col[i + 1] = mixed.g;
-    col[i + 2] = mixed.b;
+    const m = c1.clone().lerp(c2, Math.random());
+    col[i] = m.r; col[i + 1] = m.g; col[i + 2] = m.b;
   }
-
   pGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
   pGeo.setAttribute('color',    new THREE.BufferAttribute(col, 3));
-
-  const pMat = new THREE.PointsMaterial({
+  const particles = new THREE.Points(pGeo, new THREE.PointsMaterial({
     size: 0.05, vertexColors: true,
-    transparent: true, opacity: 0.6,
+    transparent: true, opacity: 0.5,
     blending: THREE.AdditiveBlending,
-  });
-  const particles = new THREE.Points(pGeo, pMat);
-  scene.add(particles);
+  }));
+  group.add(particles);
 
-  // Mouse parallax
+  // ── Forensics orbit rings (scanning / radar vibe) ────────────
+  const mkRing = (radius, tube, color, opacity, rx, ry, rz) => {
+    const m = new THREE.Mesh(
+      new THREE.TorusGeometry(radius, tube, 6, 120),
+      new THREE.MeshBasicMaterial({ color, transparent: true, opacity })
+    );
+    m.rotation.set(rx, ry, rz);
+    group.add(m);
+    return m;
+  };
+  const ring1 = mkRing(5.2, 0.016, 0x00ffcc, 0.22, Math.PI / 2, 0, 0);
+  const ring2 = mkRing(6.4, 0.011, 0x8b5cf6, 0.16, Math.PI / 5, 0, Math.PI / 7);
+  const ring3 = mkRing(4.6, 0.009, 0x00ffcc, 0.10, -Math.PI / 3, Math.PI / 4, 0);
+
+  // ── Mini background stars (scene-level, not in group) ────────
+  const starGeo = new THREE.BufferGeometry();
+  const starPos = new Float32Array(550 * 3);
+  for (let i = 0; i < 550 * 3; i++) starPos[i] = (Math.random() - 0.5) * 110;
+  starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+  const starField = new THREE.Points(starGeo, new THREE.PointsMaterial({
+    size: 0.07, color: 0xffffff, transparent: true, opacity: 0.20,
+  }));
+  scene.add(starField);
+
+  // ── Mouse parallax ──────────────────────────────────────────
   let mouseX = 0, mouseY = 0;
   document.addEventListener('mousemove', e => {
     mouseX = e.clientX - window.innerWidth  / 2;
     mouseY = e.clientY - window.innerHeight / 2;
   });
 
-  // Scroll: fade out past hero, scale up as user scrolls down through hero
+  // ── Scroll: fade out past hero, scale up while scrolling ─────
   let scrollScale = 1;
-
   function onScroll() {
     const hero = document.getElementById('home');
     if (!hero) return;
-    const heroH  = hero.offsetHeight;
+    const heroH   = hero.offsetHeight;
     const scrollY = window.scrollY;
-
-    // Fade out in the bottom 35% of the hero height
     const fadeStart = heroH * 0.65;
-    const opacity = scrollY < fadeStart
-      ? 1
-      : Math.max(0, 1 - (scrollY - fadeStart) / (heroH * 0.35));
-    container.style.opacity = String(opacity);
-
-    // Scale from 1× at top to 1.45× at bottom of hero
+    container.style.opacity = String(
+      scrollY < fadeStart ? 1 : Math.max(0, 1 - (scrollY - fadeStart) / (heroH * 0.35))
+    );
     scrollScale = 1 + Math.min(scrollY / heroH, 1) * 0.45;
   }
-
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
+  // ── Animation loop ──────────────────────────────────────────
   const clock = new THREE.Clock();
-
   (function animate() {
     requestAnimationFrame(animate);
     const t = clock.getElapsedTime();
 
-    coreMesh.rotation.y  += 0.002;
-    innerMesh.rotation.x -= 0.005;
-    innerMesh.rotation.y += 0.005;
-    particles.rotation.y  = t * 0.05;
+    coreMesh.rotation.y += 0.002;
+    particles.rotation.y = t * 0.04;
 
-    coreMesh.rotation.y += 0.05 * (mouseX * 0.005 - coreMesh.rotation.y);
-    coreMesh.rotation.x += 0.05 * (mouseY * 0.005 - coreMesh.rotation.x);
+    ring1.rotation.z += 0.0028;
+    ring2.rotation.y += 0.0018;
+    ring3.rotation.z -= 0.0014;
 
-    camera.position.x += (mouseX * 0.01 - camera.position.x) * 0.05;
-    camera.position.y += (-mouseY * 0.01 - camera.position.y) * 0.05;
-    camera.lookAt(scene.position);
+    starField.rotation.y = t * 0.004;
 
-    // Apply scroll-driven scale to all Three.js objects
-    coreMesh.scale.setScalar(scrollScale);
-    innerMesh.scale.setScalar(scrollScale);
-    particles.scale.setScalar(scrollScale);
+    // Mouse parallax on whole group
+    group.rotation.y += 0.05 * (mouseX * 0.004 - group.rotation.y);
+    group.rotation.x += 0.05 * (mouseY * 0.004 - group.rotation.x);
+
+    group.scale.setScalar(scrollScale);
 
     renderer.render(scene, camera);
   })();
