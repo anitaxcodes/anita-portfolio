@@ -35,54 +35,101 @@ window.addEventListener('load', () => {
 });
 
 /* ============================================================
-   2. STARFIELD CANVAS
-   Static twinkling stars in white, cyan and purple.
+   2. WEBGL BACKGROUND — Three.js
+   Wireframe icosahedron cores + particle cloud, mouse parallax.
    ============================================================ */
-(function initStarfield() {
-  const canvas = document.getElementById('starfield');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
+(function initWebGL() {
+  const container = document.getElementById('webgl-container');
+  if (!container || typeof THREE === 'undefined') return;
 
-  const STAR_COLORS = ['#ffffff', '#00FFFF', '#9B59B6'];
-  const STAR_COUNT  = 280;
-  let stars = [];
+  const scene = new THREE.Scene();
+  scene.fog = new THREE.FogExp2(0x000000, 0.04);
 
-  function resize() {
-    canvas.width  = window.innerWidth;
-    canvas.height = window.innerHeight;
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera.position.z = 15;
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  // Outer wireframe icosahedron
+  const coreGeo = new THREE.IcosahedronGeometry(4, 2);
+  const coreMat = new THREE.MeshBasicMaterial({ color: 0x8b5cf6, wireframe: true, transparent: true, opacity: 0.15 });
+  const coreMesh = new THREE.Mesh(coreGeo, coreMat);
+  scene.add(coreMesh);
+
+  // Inner wireframe icosahedron
+  const innerGeo = new THREE.IcosahedronGeometry(2.5, 0);
+  const innerMat = new THREE.MeshBasicMaterial({ color: 0x00ffcc, wireframe: true, transparent: true, opacity: 0.3 });
+  const innerMesh = new THREE.Mesh(innerGeo, innerMat);
+  scene.add(innerMesh);
+
+  // Particle cloud (cyan ↔ purple gradient, spherical distribution)
+  const pGeo   = new THREE.BufferGeometry();
+  const COUNT   = 3000;
+  const pos     = new Float32Array(COUNT * 3);
+  const col     = new Float32Array(COUNT * 3);
+  const c1      = new THREE.Color(0x00ffcc);
+  const c2      = new THREE.Color(0x8b5cf6);
+
+  for (let i = 0; i < COUNT * 3; i += 3) {
+    const r     = 15 + Math.random() * 20;
+    const theta = 2 * Math.PI * Math.random();
+    const phi   = Math.acos(2 * Math.random() - 1);
+    pos[i]     = r * Math.sin(phi) * Math.cos(theta);
+    pos[i + 1] = r * Math.sin(phi) * Math.sin(theta);
+    pos[i + 2] = r * Math.cos(phi);
+    const mixed = c1.clone().lerp(c2, Math.random());
+    col[i]     = mixed.r;
+    col[i + 1] = mixed.g;
+    col[i + 2] = mixed.b;
   }
 
-  function buildStars() {
-    stars = Array.from({ length: STAR_COUNT }, () => ({
-      x:       Math.random() * canvas.width,
-      y:       Math.random() * canvas.height,
-      r:       Math.random() * 1.4 + 0.3,
-      color:   STAR_COLORS[Math.floor(Math.random() * STAR_COLORS.length)],
-      alpha:   Math.random() * 0.7 + 0.2,
-      // twinkle: gently oscillate alpha (~5–16s per cycle)
-      speed:   Math.random() * 0.0008 + 0.0004,
-      phase:   Math.random() * Math.PI * 2,
-    }));
-  }
+  pGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  pGeo.setAttribute('color',    new THREE.BufferAttribute(col, 3));
 
-  function drawStars(t) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    stars.forEach(s => {
-      const twinkle = s.alpha * (0.6 + 0.4 * Math.sin(t * s.speed + s.phase));
-      ctx.beginPath();
-      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = s.color;
-      ctx.globalAlpha = twinkle;
-      ctx.fill();
-    });
-    ctx.globalAlpha = 1;
-    requestAnimationFrame(drawStars);
-  }
+  const pMat = new THREE.PointsMaterial({
+    size: 0.05, vertexColors: true,
+    transparent: true, opacity: 0.6,
+    blending: THREE.AdditiveBlending,
+  });
+  const particles = new THREE.Points(pGeo, pMat);
+  scene.add(particles);
 
-  window.addEventListener('resize', () => { resize(); buildStars(); });
-  resize();
-  buildStars();
-  requestAnimationFrame(drawStars);
+  // Mouse parallax
+  let mouseX = 0, mouseY = 0;
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX - window.innerWidth  / 2;
+    mouseY = e.clientY - window.innerHeight / 2;
+  });
+
+  const clock = new THREE.Clock();
+
+  (function animate() {
+    requestAnimationFrame(animate);
+    const t = clock.getElapsedTime();
+
+    coreMesh.rotation.y  += 0.002;
+    innerMesh.rotation.x -= 0.005;
+    innerMesh.rotation.y += 0.005;
+    particles.rotation.y  = t * 0.05;
+
+    coreMesh.rotation.y += 0.05 * (mouseX * 0.005 - coreMesh.rotation.y);
+    coreMesh.rotation.x += 0.05 * (mouseY * 0.005 - coreMesh.rotation.x);
+
+    camera.position.x += (mouseX * 0.01 - camera.position.x) * 0.05;
+    camera.position.y += (-mouseY * 0.01 - camera.position.y) * 0.05;
+    camera.lookAt(scene.position);
+
+    renderer.render(scene, camera);
+  })();
+
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
 })();
 
 /* ============================================================

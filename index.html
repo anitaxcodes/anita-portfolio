@@ -30,6 +30,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="style.css" />
+
+  <!-- Three.js for WebGL background -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
 
@@ -55,8 +58,9 @@
   <!-- ==================== MAIN CONTENT ==================== -->
   <div id="main-content">
 
-    <!-- Starfield background -->
-    <canvas id="starfield" aria-hidden="true"></canvas>
+    <!-- WebGL Three.js background -->
+    <div id="webgl-container" aria-hidden="true"></div>
+    <div class="noise-overlay" aria-hidden="true"></div>
 
     <!-- Custom cursor -->
     <div class="cursor" aria-hidden="true"></div>
