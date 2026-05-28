@@ -104,6 +104,29 @@ window.addEventListener('load', () => {
     mouseY = e.clientY - window.innerHeight / 2;
   });
 
+  // Scroll: fade out past hero, scale up as user scrolls down through hero
+  let scrollScale = 1;
+
+  function onScroll() {
+    const hero = document.getElementById('home');
+    if (!hero) return;
+    const heroH  = hero.offsetHeight;
+    const scrollY = window.scrollY;
+
+    // Fade out in the bottom 35% of the hero height
+    const fadeStart = heroH * 0.65;
+    const opacity = scrollY < fadeStart
+      ? 1
+      : Math.max(0, 1 - (scrollY - fadeStart) / (heroH * 0.35));
+    container.style.opacity = String(opacity);
+
+    // Scale from 1× at top to 1.45× at bottom of hero
+    scrollScale = 1 + Math.min(scrollY / heroH, 1) * 0.45;
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
   const clock = new THREE.Clock();
 
   (function animate() {
@@ -121,6 +144,11 @@ window.addEventListener('load', () => {
     camera.position.x += (mouseX * 0.01 - camera.position.x) * 0.05;
     camera.position.y += (-mouseY * 0.01 - camera.position.y) * 0.05;
     camera.lookAt(scene.position);
+
+    // Apply scroll-driven scale to all Three.js objects
+    coreMesh.scale.setScalar(scrollScale);
+    innerMesh.scale.setScalar(scrollScale);
+    particles.scale.setScalar(scrollScale);
 
     renderer.render(scene, camera);
   })();
